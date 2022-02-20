@@ -5,8 +5,8 @@
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min); // Округление вверх до ближайшего большего целого
   max = Math.floor(max); // Округление вниз до ближайшего меньшего целого
-  if (min > max || min == max) {
-    return ("Значение «min» не должно быть больше или равно «max»");
+  if (min > max || min === max) {
+    return ('Значение «min» не должно быть больше или равно «max»');
   }
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
@@ -20,4 +20,4 @@ function checkStringLength(checkedString, maxLength) {
   return checkedString.length <= maxLength;
 }
 
-checkStringLength("Привет", 5);
+checkStringLength('Привет', 5);
