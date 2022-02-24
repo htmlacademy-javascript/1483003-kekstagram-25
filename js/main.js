@@ -5,15 +5,15 @@
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min); // Округление вверх до ближайшего большего целого
   max = Math.floor(max); // Округление вниз до ближайшего меньшего целого
+  if (min < 0 || max < 0) {
+    return 0;
+  }
   if (min > max) {
     [min, max] = [max, min];
     return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
   }
   if (min === max) {
     return min;
-  }
-  if (min < 0 || max < 0) {
-    return 0;
   }
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
