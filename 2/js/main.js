@@ -5,14 +5,19 @@
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min); // Округление вверх до ближайшего большего целого
   max = Math.floor(max); // Округление вниз до ближайшего меньшего целого
-  if (min > max || min === max) {
-    return ('Значение «min» не должно быть больше или равно «max»');
+  if (min < 0 || max < 0) {
+    return 0;
+  }
+  if (min === max) {
+    return min;
+  }
+  if (min > max) {
+    [min, max] = [max, min];
   }
   return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
-getRandomIntInclusive(10, 50);
-
+getRandomIntInclusive(100, 50);
 
 // Функция для проверки максимальной длины строки
 
