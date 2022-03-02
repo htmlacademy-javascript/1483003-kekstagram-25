@@ -1,11 +1,11 @@
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
 function isNumber(val) {
-  return typeof val === "number";
+  return typeof val === 'number';
 }
 
 function isPositiveMaxNumbers() {
-  return Math.max(...arguments) > 0
+  return Math.max(...arguments) > 0;
 }
 
 // Функция возвращающая случайное целое число из переданного диапазона включительно
@@ -41,4 +41,4 @@ getRandomIntInclusive(100, 50);
  */
 const checkStringMaxLength = (string, maxLength) => string.length <= maxLength;
 
-checkStringMaxLength("Привет", 10);
+checkStringMaxLength('Привет', 10);
