@@ -2,7 +2,7 @@ root: true
 
 parserOptions:
   ecmaVersion: 2018
-  sourceType: "module"
+  sourceType: 'module'
 
 env:
   es2017: true
@@ -14,4 +14,4 @@ globals:
   noUiSlider: readonly
 
 extends:
-  "htmlacademy/vanilla"
+  'htmlacademy/vanilla'

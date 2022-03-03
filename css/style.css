@@ -2,18 +2,18 @@
    ========================================================================== */
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("../fonts/OpenSansCondensed-Bold.woff2") format("woff2"),
-      url("../fonts/OpenSansCondensed-Bold.woff") format("woff");
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSansCondensed-Bold.woff2') format('woff2'),
+      url('../fonts/OpenSansCondensed-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("../fonts/OpenSans-Regular.woff2") format("woff2"),
-      url("../fonts/OpenSans-Regular.woff") format("woff");
+  font-family: 'Open Sans';
+  src: url('../fonts/OpenSans-Regular.woff2') format('woff2'),
+      url('../fonts/OpenSans-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -27,7 +27,7 @@
 }
 
 body {
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
@@ -72,7 +72,7 @@ main {
   font-size: 0;
 
   background-color: rgba(255, 255, 255, 0.2);
-  background-image: url("../img/icon-cross.svg");
+  background-image: url('../img/icon-cross.svg');
   background-position: center;
   background-repeat: no-repeat;
 
@@ -139,7 +139,7 @@ main {
 .img-filters__button {
   padding: 5px 15px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: auto;
@@ -161,7 +161,7 @@ main {
 .img-filters__label {
   padding: 5px 15px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: auto;
@@ -234,7 +234,7 @@ main {
   padding-left: 30px;
   position: relative;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   color: #ffffff;
 }
@@ -245,12 +245,12 @@ main {
 
 .picture__comments::before,
 .picture__likes::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 5px;
   top: -7px;
 
-  background-image: url("../img/sprite.png");
+  background-image: url('../img/sprite.png');
   background-repeat: no-repeat;
 }
 
@@ -295,7 +295,7 @@ main {
   min-height: 569px;
 
   background-color: #eed21e;
-  background-image: url("../img/logo-background-1.jpg");
+  background-image: url('../img/logo-background-1.jpg');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -309,7 +309,7 @@ main {
   padding: 0;
   min-height: 569px;
 
-  background-image: url("../img/logo-mask.png");
+  background-image: url('../img/logo-mask.png');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -327,7 +327,7 @@ main {
 
   font-size: 0;
 
-  background-image: url("../img/upload-button-bg.png");
+  background-image: url('../img/upload-button-bg.png');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -335,7 +335,7 @@ main {
 }
 
 .img-upload__label::after {
-  content: "";
+  content: '';
   position: absolute;
 
   top: 32px;
@@ -344,7 +344,7 @@ main {
   width: 86px;
   height: 114px;
 
-  background-image: url("../img/upload-button.svg");
+  background-image: url('../img/upload-button.svg');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -404,7 +404,7 @@ main {
   left: 50%;
   z-index: 1;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
 
   -webkit-transform: translateX(-50%);
@@ -451,7 +451,7 @@ main {
 }
 
 .scale__control--smaller::before {
-  content: "–";
+  content: '–';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -480,7 +480,7 @@ main {
 }
 
 .scale__control--bigger::before {
-  content: "+";
+  content: '+';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -586,7 +586,7 @@ main {
 }
 
 .effects__label {
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
 
   cursor: pointer;
@@ -609,7 +609,7 @@ main {
   font-size: 0;
 
   background-color: #314359;
-  background-image: url("../img/upload-default-image.jpg");
+  background-image: url('../img/upload-default-image.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% auto;
@@ -676,7 +676,7 @@ main {
   margin-bottom: 20px;
   padding: 5px 10px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   color: #000000;
 
@@ -690,7 +690,7 @@ main {
   margin: 0 auto;
   padding: 15px 10px;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   color: #000000;
 
@@ -708,7 +708,7 @@ main {
   color: #ffe753;
   text-align: center;
   text-transform: uppercase;
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 700;
 
   background-color: rgba(255, 231, 82, 0.2);
@@ -786,7 +786,7 @@ main {
   max-width: 600px;
 
   color: #000000;
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   font-weight: 400;
   text-transform: none;
 
@@ -848,7 +848,7 @@ main {
 }
 
 .likes-count::before {
-  content: "";
+  content: '';
   position: absolute;
 
   top: 3px;
@@ -857,7 +857,7 @@ main {
   width: 20px;
   height: 18px;
 
-  background-image: url("../img/sprite.png");
+  background-image: url('../img/sprite.png');
   background-repeat: no-repeat;
 
   background-position: -5px -56px;
@@ -942,7 +942,7 @@ main {
 
 .spinner::after,
 .comments-loader:active::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 200px;
   top: 7px;
@@ -1035,7 +1035,7 @@ main {
 
   font-size: 0;
 
-  background-image: url("../img/sprite.png");
+  background-image: url('../img/sprite.png');
   background-repeat: no-repeat;
   background-position: -5px -106px;
 
@@ -1134,7 +1134,7 @@ main {
 
   font-size: 0;
 
-  background-image: url("../img/sprite.png");
+  background-image: url('../img/sprite.png');
   background-repeat: no-repeat;
 
   opacity: 0.6;
@@ -1177,7 +1177,7 @@ main {
   width: 600px;
   height: 100%;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   text-align: center;
   font-weight: 700;
   font-size: 20px;
@@ -1221,7 +1221,7 @@ main {
   justify-content: center;
   align-items: center;
 
-  font-family: "Open Sans", "Arial", sans-serif;
+  font-family: 'Open Sans', 'Arial', sans-serif;
   text-align: center;
   font-weight: 700;
   font-size: 20px;
@@ -1253,7 +1253,7 @@ main {
 }
 
 .error__title::before {
-  content: "";
+  content: '';
   position: absolute;
 
   width: 59px;
@@ -1262,7 +1262,7 @@ main {
   top: -100px;
   left: 50%;
 
-  background-image: url("../img/icon-warning.svg");
+  background-image: url('../img/icon-warning.svg');
 
   -webkit-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
@@ -1299,7 +1299,7 @@ main {
  */
 
 .img-upload__message--loading::before {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 40%;
   left: 50%;
@@ -1315,7 +1315,7 @@ main {
 }
 
 .img-upload__message--loading::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 40%;
   left: 50%;
