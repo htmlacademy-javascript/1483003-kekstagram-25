@@ -128,4 +128,8 @@ const makePost = (_, index) => {
   };
 };
 
-const descriptionPhoto = Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
+const descriptionPhoto = () => {
+  return Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
+};
+
+descriptionPhoto();
