@@ -110,15 +110,15 @@ const getNextCommentId = getNextRandomInt(3, 2);
  * @description Функция возвращает элемент массива
  * @param {array} elements - массив
  */
-const getRandomArrayElement = elements => elements[getRandomIntInclusive(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
 // Функция получения списка комментариев
 
 const makeComment = () => ({
-    id: getNextCommentId(),
-    avatar: `img/avatar-${getRandomIntInclusive(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
-    message: getRandomArrayElement(USER_COMMENTS),
-    name: getRandomArrayElement(USER_NAMES),
+  id: getNextCommentId(),
+  avatar: `img/avatar-${getRandomIntInclusive(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
+  message: getRandomArrayElement(USER_COMMENTS),
+  name: getRandomArrayElement(USER_NAMES),
 });
 
 // Функция получения описания фотографии
@@ -134,8 +134,6 @@ const makePost = (_, index) => {
   };
 };
 
-const makeUserPosts = () => {
-  return Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
-};
+const makeUserPosts = () => Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
 
 makeUserPosts();
