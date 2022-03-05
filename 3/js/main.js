@@ -44,6 +44,12 @@ const POSTS_PHOTO_COUNT = 25;
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
 
+const MIN_AVATAR_ID = 1;
+const MAX_AVATAR_ID = 6;
+
+const MIN_COMMENT_ID = 1;
+const MAX_COMMENT_ID = 6;
+
 // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
 function isNumber(val) {
@@ -100,20 +106,20 @@ const getNextRandomInt = (startNumber = 1, maxStep = 1) => {
 
 const getNextCommentId = getNextRandomInt(3, 2);
 
-const getRandomArrayIndex = (elements) => {
-  return getRandomIntInclusive(0, elements.length - 1);
-};
+/**
+ * @description Функция возвращает элемент массива
+ * @param {array} elements - массив
+ */
+const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
 // Функция получения списка комментариев
 
-const makeComment = () => {
-  return {
-    id: getNextCommentId(),
-    avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
-    message: USER_COMMENTS[getRandomArrayIndex(USER_COMMENTS)],
-    name: USER_NAMES[getRandomArrayIndex(USER_NAMES)],
-  };
-};
+const makeComment = () => ({
+  id: getNextCommentId(),
+  avatar: `img/avatar-${getRandomIntInclusive(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
+  message: getRandomArrayElement(USER_COMMENTS),
+  name: getRandomArrayElement(USER_NAMES),
+});
 
 // Функция получения описания фотографии
 
@@ -122,14 +128,12 @@ const makePost = (_, index) => {
   return {
     id,
     url: `photos/${id}.jpg`,
-    description: POST_DESCRIPTIONS[getRandomArrayIndex(POST_DESCRIPTIONS)],
+    description: getRandomArrayElement(POST_DESCRIPTIONS),
     likes: getRandomIntInclusive(MIN_LIKES, MAX_LIKES),
-    comments: Array.from({ length: getRandomIntInclusive(1, 3) }, makeComment),
+    comments: Array.from({ length: getRandomIntInclusive(MIN_COMMENT_ID, MAX_COMMENT_ID) }, makeComment),
   };
 };
 
-const descriptionPhoto = () => {
-  return Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
-};
+const makeUserPosts = () => Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
 
-descriptionPhoto();
+makeUserPosts();
