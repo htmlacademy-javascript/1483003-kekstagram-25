@@ -1,3 +1,3 @@
-import {makeUserPosts} from './data.js';
+import {makeUserPosts} from './generating-posts.js';
 
 makeUserPosts();
