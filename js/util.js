@@ -2,9 +2,12 @@
 
 const isNumber = (val) => typeof val === 'number';
 
-const isPositiveMaxNumbers = function() {
-  return Math.max(...arguments) > 0;
-};
+/**
+ * @description Функция находит наибольшее число из переданных и проверяет, положительное ли оно
+ * @param  {number} args - проверяемое число или числа
+ * @returns {boolean}
+ */
+const isPositiveMaxNumbers = (...args) => Math.max(...args) > 0;
 
 /**
  * @description Функция проверяет, что строка меньше или равна заданной длине
