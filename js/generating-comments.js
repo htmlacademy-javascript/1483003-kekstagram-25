@@ -26,10 +26,10 @@ const USER_NAMES = [
 const MIN_AVATAR_ID = 1;
 const MAX_AVATAR_ID = 6;
 
-const POSITIVE_INTEGER = 3;
-const MAX_POSITIVE_INTEGER = 2;
+const COMMENT_START_ID = 3;
+const COMMENT_MAX_ID = 2;
 
-const getNextCommentId = () => getNextRandomInt(POSITIVE_INTEGER, MAX_POSITIVE_INTEGER);
+const getNextCommentId = () => getNextRandomInt(COMMENT_START_ID, COMMENT_MAX_ID);
 
 // Функция получения списка комментариев
 
