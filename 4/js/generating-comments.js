@@ -23,8 +23,8 @@ const USER_NAMES = [
   'Устинья',
 ];
 
-const MIN_AVATAR_ID = 1;
-const MAX_AVATAR_ID = 6;
+const AVATAR_MIN_ID = 1;
+const AVATAR_MAX_ID = 6;
 
 const COMMENT_START_ID = 3;
 const COMMENT_MAX_ID = 2;
@@ -35,7 +35,7 @@ const getNextCommentId = getNextRandomInt(COMMENT_START_ID, COMMENT_MAX_ID);
 
 const makeComment = () => ({
   id: getNextCommentId(),
-  avatar: `img/avatar-${getRandomIntInclusive(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
+  avatar: `img/avatar-${getRandomIntInclusive(AVATAR_MIN_ID, AVATAR_MAX_ID)}.svg`,
   message: getRandomArrayElement(USER_COMMENTS),
   name: getRandomArrayElement(USER_NAMES),
 });
