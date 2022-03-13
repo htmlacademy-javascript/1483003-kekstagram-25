@@ -29,7 +29,7 @@ const MAX_AVATAR_ID = 6;
 const COMMENT_START_ID = 3;
 const COMMENT_MAX_ID = 2;
 
-const getNextCommentId = () => getNextRandomInt(COMMENT_START_ID, COMMENT_MAX_ID);
+const getNextCommentId = getNextRandomInt(COMMENT_START_ID, COMMENT_MAX_ID);
 
 // Функция получения списка комментариев
 
