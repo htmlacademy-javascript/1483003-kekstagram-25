@@ -1,3 +1,5 @@
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 const isNumber = (val) => typeof val === 'number';
 
 /**
@@ -61,4 +63,4 @@ const getNextRandomInt = (startNumber = 1, maxStep = 1) => {
   };
 };
 
-export {getRandomIntInclusive, getRandomArrayElement, getNextRandomInt};
+export {isEscapeKey, getRandomIntInclusive, getRandomArrayElement, getNextRandomInt};
