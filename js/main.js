@@ -1,4 +1,4 @@
-import {makeUserPosts} from './generating-posts.js';
-import './rendering-random-user-photos.js';
+import {getRandomUsersPhotos} from './rendering-random-user-photos.js';
+import './rendering-full-size-photo.js';
 
-makeUserPosts();
+getRandomUsersPhotos();
