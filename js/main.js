@@ -1,4 +1,8 @@
-import {getRandomUsersPhotos} from './rendering-random-user-photos.js';
 import './rendering-full-size-photo.js';
+import './rendering-random-user-photos.js';
 
-getRandomUsersPhotos();
+
+
+
+
+
