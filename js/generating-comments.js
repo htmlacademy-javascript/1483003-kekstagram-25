@@ -27,7 +27,7 @@ const AVATAR_MIN_ID = 1;
 const AVATAR_MAX_ID = 6;
 
 const COMMENT_START_ID = 3;
-const COMMENT_MAX_ID = 2;
+const COMMENT_MAX_ID = 5;
 
 const getNextCommentId = getNextRandomInt(COMMENT_START_ID, COMMENT_MAX_ID);
 

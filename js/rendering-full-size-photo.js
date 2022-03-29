@@ -1,15 +1,6 @@
 import { isEscapeKey } from './util.js';
-import { renderUsersPosts } from './rendering-random-user-photos.js';
-import { makeUserPosts } from './generating-posts.js';
 
-const userPosts = makeUserPosts();
-console.log(userPosts);
-
-const pageBody = document.querySelector('body');
-/**
- * Секция для вставки отрисованных фотографий случайных пользователей
- */
-const galleryRandomUsersPhotos = document.querySelector('.pictures');
+const pageBody = document.body;
 /**
  * Кнопка для выхода из полноэкранного просмотра изображения
  */
@@ -35,6 +26,10 @@ const commentsCount = bigPictureSection.querySelector('.comments-count');
  */
 const socialComments = bigPictureSection.querySelector('.social__comments');
 /**
+ * Один комментарий из списка комментариев
+ */
+const socialOneComment = bigPictureSection.querySelector('.social__comment');
+/**
  * Описание фотографии
  */
 const socialCaption = bigPictureSection.querySelector('.social__caption');
@@ -47,14 +42,6 @@ const socialCommentCount = bigPictureSection.querySelector('.social__comment-cou
  */
 const commentsLoader = bigPictureSection.querySelector('.comments-loader');
 
-galleryRandomUsersPhotos.addEventListener('click', (evt) => onContainerClick(evt));
-
-function onContainerClick (evt) {
-  if (evt.target.nodeName === 'IMG') {
-    showPhotoPopup (evt.target.dataset.photoId);
-  }
-}
-
 const onBigPhotoEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -62,19 +49,34 @@ const onBigPhotoEscKeydown = (evt) => {
   }
 };
 
-function fillPreview(photoData) {
-  bigPictureImg.src = photoData.url;
-  likesCount.textContent = photoData.likes;
-  commentsCount.textContent = photoData.comments.length;
-};
+function createComment(userComments) {
+  const commentFragment = document.createDocumentFragment();
 
-function showPhotoPopup(photoId) {
+  userComments.comments.forEach((userComment) => {
+    const commentItem = socialOneComment.cloneNode(true);
+
+    commentItem.querySelector('.social__picture').src = userComment.avatar;
+    commentItem.querySelector('.social__text').textContent = userComment.message;
+    commentFragment.append(commentItem);
+  });
+
+  socialComments.innerHTML = '';
+  socialComments.append(commentFragment);
+}
+
+function showPhotoPopup(post) {
   bigPictureSection.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
 
-  fillPreview(userPosts[photoId]);
+  bigPictureImg.src = post.url;
+  likesCount.textContent = post.likes;
+  commentsCount.textContent = post.comments.length;
+  socialCaption.textContent = post.description;
+
+  createComment(post);
 
   document.addEventListener('keydown', onBigPhotoEscKeydown);
 }
@@ -87,19 +89,5 @@ function hidePhotoPopup() {
 }
 
 buttonCancel.addEventListener('click', hidePhotoPopup);
-
-/* galleryRandomUsersPhotos.addEventListener('click', showBigPhoto);
-
-/* galleryRandomUsersPhotos.addEventListener('click', (evt) => {
-  showBigPhoto();
-  const currentPhoto = evt.target.dataset;
-  const bigPhoto = userPosts.find((userPost) => userPost.id === 6);
-  console.log(bigPhoto);
-  bigPictureImg.src = evt.target.src;
-
-  console.log(currentPhoto);
-}); */
-
-/* console.log(allUsersPosts); */
 
 export { showPhotoPopup };
