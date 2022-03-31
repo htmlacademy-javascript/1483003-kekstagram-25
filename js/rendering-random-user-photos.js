@@ -1,18 +1,34 @@
-import {makeUserPosts} from './generating-posts.js';
+import { showPhotoPopup } from './rendering-full-size-photo.js';
 
-const galleryRandomUsersPhotos = document.querySelector('.pictures'); // Секция для вставки отрисованных фотографий случайных пользователей
-const userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture'); // Шаблон для заполнения данными фотографии случайного пользователя
+const renderUsersPosts = (userPosts) => {
+  /**
+ * Секция для вставки отрисованных фотографий случайных пользователей
+ */
+  const galleryRandomUsersPhotos = document.querySelector('.pictures');
+  /**
+   *  Шаблон для заполнения данными фотографии случайного пользователя
+   */
+  const userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
+  const photosGalleryFragment = document.createDocumentFragment();
 
-const userPosts = makeUserPosts();
+  userPosts.forEach((userPost) => {
 
-const photosGalleryFragment = document.createDocumentFragment();
+    const userPhoto = userPhotoTemplate.cloneNode(true);
 
-userPosts.forEach((userPost) => {
-  const userPhoto = userPhotoTemplate.cloneNode(true);
-  userPhoto.querySelector('.picture__img').src = userPost.url;
-  userPhoto.querySelector('.picture__comments').textContent = userPost.comments.length;
-  userPhoto.querySelector('.picture__likes').textContent = userPost.likes;
-  photosGalleryFragment.appendChild(userPhoto);
-});
+    userPhoto.querySelector('.picture__img').src = userPost.url;
+    userPhoto.querySelector('.picture__comments').textContent = userPost.comments.length;
+    userPhoto.querySelector('.picture__likes').textContent = userPost.likes;
 
-galleryRandomUsersPhotos.appendChild(photosGalleryFragment);
+    photosGalleryFragment.append(userPhoto);
+
+    userPhoto.addEventListener('click', () => {
+      showPhotoPopup(userPost);
+    });
+  });
+
+  galleryRandomUsersPhotos.append(photosGalleryFragment);
+
+  return galleryRandomUsersPhotos;
+};
+
+export { renderUsersPosts };

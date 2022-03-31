@@ -23,7 +23,7 @@ const LIKES_MIN_QUANTITY = 15;
 const LIKES_MAX_QUANTITY = 200;
 
 const COMMENT_MIN_ID = 1;
-const COMMENT_MAX_ID = 6;
+const COMMENT_MAX_ID = 18;
 
 const POSTS_PHOTO_COUNT = 25;
 
