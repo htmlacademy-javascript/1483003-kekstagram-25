@@ -49,12 +49,12 @@ imageUploadForm.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    closeEditPopup();
-    openSuccessPopup();
+    /* closeEditPopup();
+    openSuccessPopup(); */
     // Все данные приходят в изначальный вид
   } else {
-    closeEditPopup();
-    openErrorPopup();
+    /* closeEditPopup();
+    openErrorPopup(); */
   }
 });
 

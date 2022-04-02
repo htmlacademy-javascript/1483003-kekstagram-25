@@ -42,10 +42,14 @@ const socialOneComment = fullSizePopupContainer.querySelector('.social__comment'
  */
 const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
 /**
- * Количество комментариев у фотографии
+ * Количество комментариев у фотографии - всего
  * @type {Element | null}
  */
-/* const socialCommentCount = fullSizePopupContainer.querySelector('.social__comment-count'); */
+const socialCommentCount = fullSizePopupContainer.querySelector('.social__comment-count');
+/**
+ * Количество комментариев у фотографии - сколько показано на данный момент
+ */
+const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show');
 /**
  * Кнопка для загрузки новой порции комментариев
  * @type {Element | null}
@@ -53,7 +57,8 @@ const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
-/* let commentsCounter = 5; */
+let commentsCounter = 0;
+// let comments = [];
 
 const onBigPhotoEsc = (evt) => {
   if (isEscapeKey(evt)) {
@@ -80,6 +85,7 @@ function renderComments(postComments) {
 
   socialComments.innerHTML = '';
   socialComments.append(commentFragment);
+  /* socialCommentCount.textContent = `` */
 }
 
 
@@ -98,9 +104,15 @@ function hideCommentsLoader() {
  */
 function showCommentsLoader() {
   commentsLoader.classList.remove('hidden');
-  commentsLoader.addEventListener('click', () => {
-  });
+  commentsLoader.addEventListener('click', () => { });
 }
+
+/* function onCommentsButtonClick () {
+  if (comments.length <= COMMENTS_LIMIT) {
+    hideCommentsLoader();
+  }
+  renderComments(comments.splice(0, COMMENTS_LIMIT));
+} */
 
 /**
  * @description Функция показа окна с полноразмерным изображением и заполнением поста данными
@@ -111,6 +123,7 @@ function showPhotoPopup(post) {
   pageBody.classList.add('modal-open');
 
   if (post.comments.length <= COMMENTS_LIMIT) {
+
     hideCommentsLoader();
   } else {
     showCommentsLoader();
@@ -122,6 +135,7 @@ function showPhotoPopup(post) {
   socialCaption.textContent = post.description;
 
   renderComments(post.comments);
+  socialCommentsShow.textContent = post.comments.length;
 
   document.addEventListener('keydown', onBigPhotoEsc);
 }
@@ -140,3 +154,5 @@ function hidePhotoPopup() {
 buttonCancel.addEventListener('click', hidePhotoPopup);
 
 export { showPhotoPopup };
+
+
