@@ -51,7 +51,6 @@ function closeErrorPopup() {
  * @returns {void}
  */
 function openErrorPopup() {
-
   document.addEventListener('keydown', onErrorPopupEsc);
   document.addEventListener('click', onDocumentMouseClick);
 }
@@ -62,4 +61,4 @@ errorButton.addEventListener('click', () => {
 
 pageBody.appendChild(errorSection);
 
-
+export { openErrorPopup };

@@ -63,6 +63,7 @@ successButton.addEventListener('click', () => {
 
 pageBody.appendChild(successSection);
 
+export { openSuccessPopup };
 
 /******** Подсказки */
 
