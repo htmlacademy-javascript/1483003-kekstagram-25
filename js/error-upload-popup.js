@@ -9,6 +9,7 @@ const errorUploadTemplate = pageBody.querySelector('#error').content.querySelect
 const errorSection = errorUploadTemplate.cloneNode(true);
 /**
  * Блок с контентом попапа
+ * @type {Element | null}
  */
 const errorInner = errorSection.querySelector('.error__inner');
 /**
@@ -16,7 +17,7 @@ const errorInner = errorSection.querySelector('.error__inner');
  */
 const errorButton = errorSection.querySelector('.error__button');
 
-function onErrorPopupEscKeydown(evt) {
+function onErrorPopupEsc(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeErrorPopup();
@@ -34,16 +35,24 @@ function onDocumentMouseClick(evt) {
   }
 }
 
+/**
+ * @description Функция закрытия окна, что при отправке данных произошла ошибка запроса
+ * @returns {void}
+ */
 function closeErrorPopup() {
   errorSection.classList.add('hidden');
 
-  document.removeEventListener('keydown', onErrorPopupEscKeydown);
+  document.removeEventListener('keydown', onErrorPopupEsc);
   document.removeEventListener('click', onDocumentMouseClick);
 }
 
+/**
+ * @description Функция открытия окна, что при отправке данных произошла ошибка запроса
+ * @returns {void}
+ */
 function openErrorPopup() {
 
-  document.addEventListener('keydown', onErrorPopupEscKeydown);
+  document.addEventListener('keydown', onErrorPopupEsc);
   document.addEventListener('click', onDocumentMouseClick);
 }
 

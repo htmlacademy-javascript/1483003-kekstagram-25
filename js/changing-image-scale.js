@@ -21,7 +21,7 @@ const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 
 /**
- * Функция уменьшения масштаба изображения
+ * @description Функция уменьшения масштаба изображения
  */
 const onReduceScale = () => {
   let scale = parseInt(scaleControlValue.value, 10);
@@ -32,7 +32,7 @@ const onReduceScale = () => {
   }
 };
 /**
- * Функция увеличения масштаба изображения
+ * @description Функция увеличения масштаба изображения
  */
 const onIncreaseScale = () => {
   let scale = parseInt(scaleControlValue.value, 10);

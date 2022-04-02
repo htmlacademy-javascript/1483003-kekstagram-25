@@ -9,6 +9,7 @@ const successUploadTemplate = pageBody.querySelector('#success').content.querySe
 const successSection = successUploadTemplate.cloneNode(true);
 /**
  * Блок с контентом попапа
+ * @type {Element | null}
  */
 const successInner = successSection.querySelector('.success__inner');
 /**
@@ -16,7 +17,7 @@ const successInner = successSection.querySelector('.success__inner');
  */
 const successButton = successSection.querySelector('.success__button');
 
-function onSuccessEscKeydown(evt) {
+function onSuccessEscKey(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault(evt);
     closeSuccessPopup();
@@ -34,17 +35,25 @@ function onDocumentMouseClick(evt) {
   }
 }
 
+/**
+ * @description Функция закрытия окна, что отправка данных прошла успешно
+ * @returns {void}
+ */
 function closeSuccessPopup() {
   successSection.classList.add('hidden');
 
-  document.removeEventListener('keydown', onSuccessEscKeydown);
+  document.removeEventListener('keydown', onSuccessEscKey);
   document.removeEventListener('click', onDocumentMouseClick);
 
 }
 
+/**
+ * @description Функция открытия окна, что отправка данных прошла успешно
+ * @returns {void}
+ */
 function openSuccessPopup() {
 
-  document.addEventListener('keydown', onSuccessEscKeydown);
+  document.addEventListener('keydown', onSuccessEscKey);
   document.addEventListener('click', onDocumentMouseClick);
 }
 

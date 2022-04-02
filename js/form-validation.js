@@ -35,9 +35,6 @@ const DEFAULT_IMAGE_SCALE = 100;
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAGS_MAX_QUANTITY = 5;
 
-// eslint-disable-next-line no-misleading-character-class
-const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
-
 const pristine = new Pristine(imageUploadForm, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
@@ -58,7 +55,7 @@ imageUploadForm.addEventListener('submit', (evt) => {
   }
 });
 
-function onEditPopupEscKeydown(evt) {
+function onEditPopupEsc(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeEditPopup();
@@ -66,19 +63,23 @@ function onEditPopupEscKeydown(evt) {
 }
 
 /**
- * Функция запрета закрытия окна при нажатии Esc
+ * @description Функция запрета закрытия окна при нажатии Esc
  */
 function focusIn() {
-  document.removeEventListener('keydown', onEditPopupEscKeydown);
+  document.removeEventListener('keydown', onEditPopupEsc);
 }
 
 /**
- * Функция разрешения закрытия окна при нажатии Esc
+ * @description Функция разрешения закрытия окна при нажатии Esc
  */
 function focusOut() {
-  document.addEventListener('keydown', onEditPopupEscKeydown);
+  document.addEventListener('keydown', onEditPopupEsc);
 }
 
+/**
+ * @description Функция открытия окна с редактированием изображения
+ * @returns {void}
+ */
 function openEditPopup() {
   imgUploadOverlay.classList.remove('hidden');
   pageBody.classList.add('modal-open');
@@ -92,12 +93,16 @@ function openEditPopup() {
   commentField.addEventListener('focusout', focusOut);
 
   uploadCancel.addEventListener('click', closeEditPopup);
-  document.addEventListener('keydown', onEditPopupEscKeydown);
+  document.addEventListener('keydown', onEditPopupEsc);
 
   scaleControlValue.value = `${DEFAULT_IMAGE_SCALE}%`;
   imgUploadPreview.style = 'transform: scale(1)';
 }
 
+/**
+ * @description Функция закрытия окна с редактированием изображения
+ * @returns {void}
+ */
 function closeEditPopup() {
   imgUploadOverlay.classList.add('hidden');
   pageBody.classList.remove('modal-open');
@@ -110,14 +115,71 @@ function closeEditPopup() {
   commentField.removeEventListener('focusin', focusIn);
   commentField.removeEventListener('focusout', focusOut);
 
-  document.removeEventListener('keydown', onEditPopupEscKeydown);
+  document.removeEventListener('keydown', onEditPopupEsc);
 
   scaleControlValue.value = `${DEFAULT_IMAGE_SCALE}%`;
   imgUploadPreview.style = 'transform: scale(1)';
 }
 
+/**
+ * @description Функция проверки количества хеш-тегов - не более HASHTAGS_MAX_QUANTITY
+ * @param {array} arrHashtags - массив элементов
+ * @returns {boolean}
+ */
+function checkLengthHashtag(arrHashtags) {
+  return arrHashtags.length <= HASHTAGS_MAX_QUANTITY;
+}
+
+pristine.addValidator(
+  hashtagsField,
+  checkLengthHashtag,
+  `Не более ${HASHTAGS_MAX_QUANTITY} хеш-тегов`
+);
+
+/**
+ * @description Функция проверки строки на соответствие условиям регулярного выражения
+ * @param {*} arrayItem - элемент массива
+ * @returns {boolean}
+ */
+function isMatchRegExp(arrayItem) {
+  // eslint-disable-next-line no-misleading-character-class
+  const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
+  return regularExpression.test(arrayItem);
+}
+
+/**
+ * @description Функция проверки каждого хеш-тега на правильность ввода в соответствии с регялярным выражением
+ * @param {array} array - массив элементов
+ * @returns {boolean}
+ */
+function validateRegExp(array) {
+  return array.every(isMatchRegExp);
+}
+
+pristine.addValidator(
+  hashtagsField,
+  validateRegExp,
+  'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.'
+);
+
+/**
+ * @description Функция проверяет, чтобы один и тот же хэш-тег не был использован дважды
+ * @param {array} array - массив элементов
+ * @returns {boolean}
+ */
+function hasDuplicate(array) {
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === array[i + 1]) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const userPostHashtags = hashtagsField.value;
-const arrayFromUserPostHashtags = userPostHashtags.split('');
+const arrayFromUserPostHashtags = userPostHashtags.split(' ');
+
 // return arrayFromUserPostHashtags;
 
 function validateHashtags() {
@@ -133,6 +195,11 @@ const userPostComment = commentField.value;
 const arrayFromUserPostComment = userPostComment.split('');
 // return arrayFromUserPostComment;
 
+/**
+ * @description Функция проверки длинны комментария
+ * @param {array} value
+ * @returns {boolean}
+ */
 function validateComment(value) {
   return value.length <= COMMENT_MAX_LENGTH;
 }
@@ -140,9 +207,19 @@ function validateComment(value) {
 pristine.addValidator(
   commentField,
   validateComment,
-  'Длина комментария не может составлять больше 140 символов'
+  `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`
 );
 
+openEditPopup();
 
-/* openEditPopup(); */
 
+// хэш-тег начинается с символа # (решётка); +++
+// строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;  +++
+// хеш-тег не может состоять только из одной решётки;
+// максимальная длина одного хэш-тега 20 символов, включая решётку; +++
+// хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
+// хэш-теги разделяются пробелами;
+// один и тот же хэш-тег не может быть использован дважды;
+// нельзя указать больше пяти хэш-тегов; +++
+// хэш-теги необязательны; +++
+// если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения. +++
