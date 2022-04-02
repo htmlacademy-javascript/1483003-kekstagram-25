@@ -27,12 +27,12 @@ const renderUsersPosts = (userPosts) => {
 
     photosGalleryFragment.append(userPhotoElement);
 
-    userPhotoElement.addEventListener('click', () => {
+    userPhotoElement.addEventListener('click', () => {    
       showPhotoPopup(userPost);
     });
   });
 
-  galleryUsersPhotos.append(photosGalleryFragment);
+  galleryUsersPhotos.append(photosGalleryFragment); 
 };
 
 export { renderUsersPosts };
