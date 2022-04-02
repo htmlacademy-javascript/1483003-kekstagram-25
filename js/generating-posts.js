@@ -1,5 +1,5 @@
-import {getRandomIntInclusive, getRandomArrayElement} from './util.js';
-import {makeComment} from './generating-comments.js';
+import { getRandomIntInclusive, getRandomArrayElement } from './util.js';
+import { makeComment } from './generating-comments.js';
 
 const POST_DESCRIPTIONS = [
   'Следуй за своим сердцем, но не забывай брать с собой мозг',
@@ -42,4 +42,4 @@ const makePost = (_, index) => {
 
 const makeUserPosts = () => Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
 
-export {makeUserPosts};
+export { makeUserPosts };

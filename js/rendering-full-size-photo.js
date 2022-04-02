@@ -45,7 +45,7 @@ const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
  * Количество комментариев у фотографии - всего
  * @type {Element | null}
  */
-const socialCommentCount = fullSizePopupContainer.querySelector('.social__comment-count');
+/* const socialCommentCount = fullSizePopupContainer.querySelector('.social__comment-count'); */
 /**
  * Количество комментариев у фотографии - сколько показано на данный момент
  */
@@ -57,7 +57,7 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
-let commentsCounter = 0;
+/* let commentsCounter = 0; */
 // let comments = [];
 
 const onBigPhotoEsc = (evt) => {

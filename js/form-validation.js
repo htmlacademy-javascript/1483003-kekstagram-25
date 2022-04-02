@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
-import { openErrorPopup } from './error-upload-popup.js';
-import { openSuccessPopup } from './success-upload-popup.js';
+/* import { openErrorPopup } from './error-upload-popup.js';
+import { openSuccessPopup } from './success-upload-popup.js'; */
 
 const pageBody = document.body;
 /**
@@ -144,18 +144,18 @@ pristine.addValidator(
  * @param {*} arrayItem - элемент массива
  * @returns {boolean}
  */
-/* function isMatchRegExp(arrayItem) {
+function isMatchRegExp(arrayItem) {
   // eslint-disable-next-line no-misleading-character-class
   const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
   return regularExpression.test(arrayItem);
-} */
+}
 
 /**
  * @description Функция проверки каждого хеш-тега на правильность ввода в соответствии с регялярным выражением
  * @param {array} array - массив элементов
  * @returns {boolean}
  */
-/* function validateRegExp(array) {
+function validateRegExp(array) {
   return array.every(isMatchRegExp);
 }
 
@@ -163,14 +163,14 @@ pristine.addValidator(
   hashtagsField,
   validateRegExp,
   'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.'
-); */
+);
 
 /**
  * @description Функция проверяет, чтобы один и тот же хэш-тег не был использован дважды
  * @param {array} array - массив элементов
  * @returns {boolean}
  */
-/* function hasDuplicate(array) {
+function hasDuplicate(array) {
 
   for (let i = 0; i < array.length; i++) {
     if (array[i] === array[i + 1]) {
@@ -178,12 +178,11 @@ pristine.addValidator(
     }
   }
   return false;
-} */
+}
 
 const userPostHashtags = hashtagsField.value;
 const arrayFromUserPostHashtags = userPostHashtags.split(' ');
-
-// return arrayFromUserPostHashtags;
+return arrayFromUserPostHashtags;
 
 function validateHashtags() {
 
@@ -196,7 +195,7 @@ pristine.addValidator(
 
 const userPostComment = commentField.value;
 const arrayFromUserPostComment = userPostComment.split('');
-// return arrayFromUserPostComment;
+return arrayFromUserPostComment;
 
 /**
  * @description Функция проверки длинны комментария
