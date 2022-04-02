@@ -80,6 +80,7 @@ function renderComments(postComments) {
 
     commentItem.querySelector('.social__picture').src = postComment.avatar;
     commentItem.querySelector('.social__text').textContent = postComment.message;
+
     commentFragment.append(commentItem);
   });
 
@@ -87,7 +88,6 @@ function renderComments(postComments) {
   socialComments.append(commentFragment);
   /* socialCommentCount.textContent = `` */
 }
-
 
 /**
  * @description Функция скрывает кнопку загрузки доолнительных коментариев, если комментариев меньше COMMENTS_LIMIT
@@ -149,6 +149,7 @@ function hidePhotoPopup() {
   pageBody.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onBigPhotoEsc);
+
 }
 
 buttonCancel.addEventListener('click', hidePhotoPopup);
