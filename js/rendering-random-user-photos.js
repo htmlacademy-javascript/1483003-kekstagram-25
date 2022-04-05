@@ -1,10 +1,16 @@
 import { showPhotoPopup } from './rendering-full-size-photo.js';
 
+/**
+ * @description Функция по отрисовке постов пользователей на странице
+ * @param {array} userPosts - массив данных
+ * @returns {void}
+ */
 const renderUsersPosts = (userPosts) => {
   /**
  * Секция для вставки отрисованных фотографий случайных пользователей
+ * @type {Element | null}
  */
-  const galleryRandomUsersPhotos = document.querySelector('.pictures');
+  const galleryUsersPhotos = document.querySelector('.pictures');
   /**
    *  Шаблон для заполнения данными фотографии случайного пользователя
    */
@@ -13,22 +19,20 @@ const renderUsersPosts = (userPosts) => {
 
   userPosts.forEach((userPost) => {
 
-    const userPhoto = userPhotoTemplate.cloneNode(true);
+    const userPhotoElement = userPhotoTemplate.cloneNode(true);
 
-    userPhoto.querySelector('.picture__img').src = userPost.url;
-    userPhoto.querySelector('.picture__comments').textContent = userPost.comments.length;
-    userPhoto.querySelector('.picture__likes').textContent = userPost.likes;
+    userPhotoElement.querySelector('.picture__img').src = userPost.url;
+    userPhotoElement.querySelector('.picture__comments').textContent = userPost.comments.length;
+    userPhotoElement.querySelector('.picture__likes').textContent = userPost.likes;
 
-    photosGalleryFragment.append(userPhoto);
+    photosGalleryFragment.append(userPhotoElement);
 
-    userPhoto.addEventListener('click', () => {
+    userPhotoElement.addEventListener('click', () => {
       showPhotoPopup(userPost);
     });
   });
 
-  galleryRandomUsersPhotos.append(photosGalleryFragment);
-
-  return galleryRandomUsersPhotos;
+  galleryUsersPhotos.append(photosGalleryFragment);
 };
 
 export { renderUsersPosts };
