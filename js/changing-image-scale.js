@@ -53,4 +53,4 @@ const removeScaleHandler = () => {
   scaleControlBigger.removeEventListener('click', onIncreaseScale);
 };
 
-export {addScaleHandler, removeScaleHandler};
+export { addScaleHandler, removeScaleHandler };

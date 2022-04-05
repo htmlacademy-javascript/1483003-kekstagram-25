@@ -22,11 +22,6 @@ const buttonCancel = fullSizePopupContainer.querySelector('#picture-cancel');
  */
 const likesCount = fullSizePopupContainer.querySelector('.likes-count');
 /**
- * Количество комментариев
- * @type {Element | null}
- */
-const commentsCount = fullSizePopupContainer.querySelector('.comments-count');
-/**
  * Список комментариев к изображению
  * @type {Element | null}
  */
@@ -42,10 +37,10 @@ const socialOneComment = fullSizePopupContainer.querySelector('.social__comment'
  */
 const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
 /**
- * Количество комментариев у фотографии - всего
+ * Количество комментариев - всего
  * @type {Element | null}
  */
-/* const socialCommentCount = fullSizePopupContainer.querySelector('.social__comment-count'); */
+const commentsCount = fullSizePopupContainer.querySelector('.comments-count');
 /**
  * Количество комментариев у фотографии - сколько показано на данный момент
  */
@@ -57,8 +52,8 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
-/* let commentsCounter = 0; */
-// let comments = [];
+let commentsCounter = 0;
+let comments = [];
 
 const onBigPhotoEsc = (evt) => {
   if (isEscapeKey(evt)) {
@@ -66,6 +61,39 @@ const onBigPhotoEsc = (evt) => {
     hidePhotoPopup();
   }
 };
+
+/* function renderCommentList (list, container) {
+  container.innerHTML = '';
+
+  const commentsList = list.slice();
+
+  if (commentsList.length <= COMMENT_COUNT) {
+    moreCommentsButton.classList.add('hidden');
+  } else {
+    moreCommentsButton.classList.remove('hidden');
+  }
+
+  const commentsPack = commentsList.splice(0, COMMENT_COUNT);
+  let commentsCount = commentsPack.length;
+
+  container.appendChild(addToFragment(commentsPack));
+
+  commentsCountElement.innerHTML = `${commentsCount} из <span class="comments-count">${list.length}</span> комментариев`;
+
+  moreCommentsButton.addEventListener('click', () => {
+    const addCommentsPack = commentsList.splice(0, COMMENT_COUNT);
+    const addCommentsCount = addCommentsPack.length;
+    container.appendChild(addToFragment(addCommentsPack));
+    commentsCount += addCommentsCount;
+    commentsCountElement.innerHTML = `${commentsCount} из <span class="comments-count">${list.length}</span> комментариев`;
+    if (commentsCount === list.length) {
+      moreCommentsButton.classList.add('hidden');
+    } else {
+      moreCommentsButton.classList.remove('hidden');
+    }
+  });
+}
+ */
 
 /**
  * @description Функция по отрисовке комментарив пользователей
@@ -86,7 +114,8 @@ function renderComments(postComments) {
 
   socialComments.innerHTML = '';
   socialComments.append(commentFragment);
-  /* socialCommentCount.textContent = `` */
+  /* commentsCounter += postComments.length;
+  socialCommentsShow.textContent = commentsCounter; */
 }
 
 /**
@@ -99,7 +128,7 @@ function hideCommentsLoader() {
 }
 
 /**
- * @description Функция показывает кнопку загрузки доолнительных коментариев, если комментариев больше COMMENTS_LIMIT
+ * @description Функция показывает кнопку загрузки дополнительных коментариев, если комментариев больше COMMENTS_LIMIT
  * @returns {void}
  */
 function showCommentsLoader() {
@@ -107,12 +136,9 @@ function showCommentsLoader() {
   commentsLoader.addEventListener('click', () => { });
 }
 
-/* function onCommentsButtonClick () {
-  if (comments.length <= COMMENTS_LIMIT) {
-    hideCommentsLoader();
-  }
+function onCommentsButtonClick() {
   renderComments(comments.splice(0, COMMENTS_LIMIT));
-} */
+}
 
 /**
  * @description Функция показа окна с полноразмерным изображением и заполнением поста данными
@@ -122,20 +148,20 @@ function showPhotoPopup(post) {
   fullSizePopupContainer.classList.remove('hidden');
   pageBody.classList.add('modal-open');
 
-  if (post.comments.length <= COMMENTS_LIMIT) {
-
-    hideCommentsLoader();
-  } else {
-    showCommentsLoader();
-  }
-
   bigPictureImg.src = post.url;
   likesCount.textContent = post.likes;
   commentsCount.textContent = post.comments.length;
   socialCaption.textContent = post.description;
 
-  renderComments(post.comments);
-  socialCommentsShow.textContent = post.comments.length;
+  if (post.comments.length <= COMMENTS_LIMIT) {
+    hideCommentsLoader();
+  } else {
+    showCommentsLoader();
+  }
+
+  const commentsFive = post.comments.splice(0, COMMENTS_LIMIT);
+  console.log(commentsFive);
+  renderComments(commentsFive);
 
   document.addEventListener('keydown', onBigPhotoEsc);
 }
