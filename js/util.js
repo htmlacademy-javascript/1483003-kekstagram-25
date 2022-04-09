@@ -17,8 +17,6 @@ const isPositiveMaxNumbers = (...args) => Math.max(...args) > 0;
  */
 const checkStringMaxLength = (string, maxLength) => string.length <= maxLength;
 
-checkStringMaxLength('Привет', 10);
-
 /**
  * @description Функция возвращающая случайное целое число из переданного диапазона включительно
  * @param {number} from - минимальное значение
@@ -63,4 +61,4 @@ const getNextRandomInt = (startNumber = 1, maxStep = 1) => {
   };
 };
 
-export {isEscapeKey, getRandomIntInclusive, getRandomArrayElement, getNextRandomInt};
+export {isEscapeKey, checkStringMaxLength, getRandomIntInclusive, getRandomArrayElement, getNextRandomInt};

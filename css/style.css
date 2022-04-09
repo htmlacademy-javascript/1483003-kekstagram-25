@@ -1404,3 +1404,15 @@ main {
 .hidden {
   display: none;
 }
+
+/* Оформление текста об ошибке ( валидация хеш-тегов, комментов********/
+
+.pristine-error.error-text {
+  text-transform: none;
+  margin-top: 0;
+}
+
+.is-invalid {
+  color: red;
+}
+

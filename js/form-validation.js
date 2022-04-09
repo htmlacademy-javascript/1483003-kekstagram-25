@@ -1,16 +1,10 @@
-import { onEditPopupEsc } from './upload-image.js';
-/* import { openErrorPopup } from './error-upload-popup.js';
-import { openSuccessPopup } from './success-upload-popup.js'; */
+import { isEscapeKey, checkStringMaxLength } from './util.js';
+import { openUploadMessagePopup } from './message-upload-popup.js';
 
-/* const pageBody = document.body; */
 /**
- * Форма для загрузки изображения
+ * Форма ввода данных
  */
 const imageUploadForm = document.querySelector('#upload-select-image');
-/* *
- * Форма редактирования изображения
- */
-/* const imgUploadOverlay = imageUploadForm.querySelector('.img-upload__overlay'); */
 /**
  * Поле для ввода хеш-тегов
  */
@@ -20,149 +14,135 @@ const hashtagsField = imageUploadForm.querySelector('.text__hashtags');
  */
 const commentField = imageUploadForm.querySelector('.text__description');
 /**
- * Поле для значения текущего масштаба
+ *
  */
-/* const scaleControlValue = imageUploadForm.querySelector('.scale__control--value'); */
-/**
- * Изображение для редактирования
- */
-/* const imgUploadPreview = imageUploadForm.querySelector('.img-upload__preview').querySelector('img'); */
+const uploadSubmitButton = imageUploadForm.querySelector('#upload-submit');
 
+// eslint-disable-next-line no-misleading-character-class
+const REGULAR_EXPRESSION = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAGS_MAX_QUANTITY = 5;
+const HASHTAGS_MAX_LENGTH = 20;
+
 
 /**
- * @description Функция запрета закрытия окна при нажатии Esc
+ * Блокировка кнопки формы на время ожидания ответа сервера
  */
-function focusIn() {
-  document.removeEventListener('keydown', onEditPopupEsc);
-}
+const blockSubmitButton = () => {
+  uploadSubmitButton.disabled = true;
+  uploadSubmitButton.textContent = 'Публикация...';
+};
 
 /**
- * @description Функция разрешения закрытия окна при нажатии Esc
+ * Разблокировка кнопки формы на время ожидания ответа сервера
  */
-function focusOut() {
-  document.addEventListener('keydown', onEditPopupEsc);
-}
+/* const unBlockSubmitButton = () => {
+  uploadSubmitButton.disabled = false;
+  uploadSubmitButton.textContent = 'Опубликовать';
+}; */
 
 const pristine = new Pristine(imageUploadForm, {
-  classTo: 'img-upload__text',
-  errorTextParent: 'img-upload__text',
+  classTo: 'text__group',
+  errorClass: 'is-invalid',
+  successClass: 'is-valid',
+  errorTextParent: 'text__group',
   errorTextTag: 'p',
   errorTextClass: 'error-text'
 });
 
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
   const isValid = pristine.validate();
   if (isValid) {
-    /* closeEditPopup();
-    openSuccessPopup(); */
-    // Все данные приходят в изначальный вид
+    imageUploadForm.submit();
+    blockSubmitButton();
+    openUploadMessagePopup('success');
   } else {
-    /* closeEditPopup();
-    openErrorPopup(); */
+    openUploadMessagePopup('error');
   }
 });
 
 /**
  * @description Функция проверки количества хеш-тегов - не более HASHTAGS_MAX_QUANTITY
- * @param {array} arrHashtags - массив элементов
+ * @param {string} value
  * @returns {boolean}
  */
-function checkLengthHashtag(arrHashtags) {
+const checkLengthHashtags = (value) => {
+  const arrHashtags = value.split(' ');
   return arrHashtags.length <= HASHTAGS_MAX_QUANTITY;
-}
+};
 
-pristine.addValidator(
-  hashtagsField,
-  checkLengthHashtag,
-  `Не более ${HASHTAGS_MAX_QUANTITY} хеш-тегов`
-);
+/**
+ * @description Функция проверки длины хештега - не более 20 символов
+ * @param {string} value
+ * @returns {boolean}
+ */
+const checkLengthOneHashtag = (value) => {
+  const oneHashtag = value.split(' ');
+  return oneHashtag.every((hashtag) => hashtag.length <= HASHTAGS_MAX_LENGTH);
+};
 
 /**
  * @description Функция проверки строки на соответствие условиям регулярного выражения
- * @param {*} arrayItem - элемент массива
+ * @param {string} arrayItem - элемент массива
  * @returns {boolean}
  */
-function isMatchRegExp(arrayItem) {
-  // eslint-disable-next-line no-misleading-character-class
-  const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
-  return regularExpression.test(arrayItem);
-}
+const isMatchRegExp = (arrayItem) => {
+  const re = new RegExp(REGULAR_EXPRESSION);
+  return re.test(arrayItem);
+};
 
 /**
- * @description Функция проверки каждого хеш-тега на правильность ввода в соответствии с регялярным выражением
- * @param {array} array - массив элементов
+ * @description Функция проверки каждого хеш-тега на правильность ввода в соответствии с регулярным выражением
+ * @param {string} value
  * @returns {boolean}
  */
-function validateRegExp(array) {
-  return array.every(isMatchRegExp);
-}
-
-pristine.addValidator(
-  hashtagsField,
-  validateRegExp,
-  'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.'
-);
+const validateRegExp = (value) => {
+  if (value === '') {
+    return true;
+  }
+  const arrayHashtags = value.split(' ');
+  return arrayHashtags.every(isMatchRegExp);
+};
 
 /**
  * @description Функция проверяет, чтобы один и тот же хэш-тег не был использован дважды
- * @param {array} array - массив элементов
+ * @param {string} value
  * @returns {boolean}
  */
-function hasDuplicate(array) {
-
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === array[i + 1]) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/* const userPostHashtags = hashtagsField.value;
-const arrayFromUserPostHashtags = userPostHashtags.split(' ');
-return arrayFromUserPostHashtags;
-
-function validateHashtags() {
-
-}
-
-pristine.addValidator(
-  hashtagsField,
-
-);
-
-const userPostComment = commentField.value;
-const arrayFromUserPostComment = userPostComment.split('');
-return arrayFromUserPostComment; */
+const hasDuplicateHashtag = (value) => {
+  const hashtags = value.toLowerCase().split(' ');
+  const uniqueTag = new Set(hashtags);
+  return uniqueTag.size === hashtags.length;
+};
 
 /**
  * @description Функция проверки длинны комментария
  * @param {array} value
  * @returns {boolean}
  */
-function validateComment(value) {
-  return value.length <= COMMENT_MAX_LENGTH;
-}
+const validateComment = (value) => checkStringMaxLength(value, COMMENT_MAX_LENGTH);
 
-pristine.addValidator(
-  commentField,
-  validateComment,
-  `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`
-);
+pristine.addValidator(hashtagsField, checkLengthHashtags, `Не более ${HASHTAGS_MAX_QUANTITY} хеш-тегов`, 1, false);
+pristine.addValidator(hashtagsField, checkLengthOneHashtag, `Длина хештега не должна превышать ${HASHTAGS_MAX_LENGTH} символов`, 1, true);
+pristine.addValidator(hashtagsField, validateRegExp, 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.', 1, false);
+pristine.addValidator(hashtagsField, hasDuplicateHashtag, 'Хеш-теги не должны повторяться', 1, false);
+pristine.addValidator(commentField, validateComment, `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`, 1, false);
 
-export { focusIn, focusOut };
+/**
+ * @description Отмена закрытия модального окана, когда фокус в поле ввода хеш-тегов
+ */
+hashtagsField.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+});
 
-// хэш-тег начинается с символа # (решётка); +++
-// строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;  +++
-// хеш-тег не может состоять только из одной решётки;
-// максимальная длина одного хэш-тега 20 символов, включая решётку; +++
-// хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
-// хэш-теги разделяются пробелами;
-// один и тот же хэш-тег не может быть использован дважды;
-// нельзя указать больше пяти хэш-тегов; +++
-// хэш-теги необязательны; +++
-// если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения. +++
+/**
+ * @description Отмена закрытия модального окана, когда фокус в поле ввода комментариев
+ */
+commentField.addEventListener('keydown', (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+});

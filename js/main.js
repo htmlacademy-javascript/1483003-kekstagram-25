@@ -11,20 +11,25 @@ renderUsersPosts(userPosts);
 console.log(userPosts);
 
 
-const sentence = document.querySelector('.social__text');
+/* const sentence = document.querySelector('.social__text');
 const text = sentence.textContent;
 
 
-const arrText = text.split(' ');
-const mapMethod = arrText.map((word) => word.toLowerCase());
+const arrText = text.split('');
+const mapMethod = arrText.map((word) => word.toLowerCase()); */
 
-mapMethod.forEach((word) => `#${word}`);
+/* console.log(mapMethod); */
+// console.log(arrText);
+/* console.log(sliceMethod); */
+
+
+/* mapMethod.forEach((word) => `#${word}`);
 
 const sliceMethod = mapMethod.slice(0, 3);
 
 mapMethod.every(
   (word, index) => word === word[index + 1]
-);
+); */
 
 // mapMethod.every(word, index => word === word[index + 1]);
 
@@ -37,9 +42,6 @@ mapMethod.every(
 
 // const copyArr = arrText.splice(0, 3);
 
-console.log(mapMethod);
-console.log(arrText);
-console.log(sliceMethod);
 
 
 /* const pageBody = document.body;
