@@ -36,6 +36,3 @@ const renderUsersPosts = (userPosts) => {
 };
 
 export { renderUsersPosts };
-
-
-

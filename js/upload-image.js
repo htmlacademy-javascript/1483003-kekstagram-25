@@ -41,12 +41,34 @@ const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider'
 
 const effectsList = imgUploadSection.querySelector('.effects__list');
 
-function onEditPopupEsc(evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeImageEditPopup();
-  }
-}
+/**
+ * @description Функция по возвращению всех данных и контрола фильтра к исходному состоянию
+ * @returns {void}
+ */
+const clearEnterData = () => {
+  scaleControlValue.value = `${DEFAULT_IMAGE_SCALE}%`;
+  imgUploadPreview.style = 'transform: scale(1)';
+
+  imageUploadForm.reset();
+  imgUploadPreview.src = '';
+};
+
+/**
+ * @description Функция закрытия окна с редактированием изображения
+ * @returns {void}
+ */
+const closeImageEditPopup = () => {
+  uploadPopupContainer.classList.add('hidden');
+  pageBody.classList.remove('modal-open');
+
+  removeScaleHandler();
+  document.removeEventListener('keydown', onEditPopupEsc);
+
+  effectsList.removeEventListener('click', onChangeImageEffect);
+  effectLevelSlider.noUiSlider.destroy();
+
+  clearEnterData();
+};
 
 /**
  * @description Функция открытия окна с редактированием изображения
@@ -98,32 +120,13 @@ function openImageEditPopup() {
   fileReader.readAsDataURL(file);
 }
 
-
-function closeImageEditPopup() {
-  uploadPopupContainer.classList.add('hidden');
-  pageBody.classList.remove('modal-open');
-
-  removeScaleHandler();
-  document.removeEventListener('keydown', onEditPopupEsc);
-
-  effectsList.removeEventListener('click', onChangeImageEffect);
-  effectLevelSlider.noUiSlider.destroy();
-
-  clearEnterData();
+function onEditPopupEsc(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeImageEditPopup();
+  }
 }
 
 uploadFileInputElement.addEventListener('change', openImageEditPopup);
-
-/**
- * @description Функция по возвращению всех данных и контрола фильтра к исходному состоянию
- * @returns {void}
- */
-function clearEnterData() {
-  scaleControlValue.value = `${DEFAULT_IMAGE_SCALE}%`;
-  imgUploadPreview.style = 'transform: scale(1)';
-
-  imageUploadForm.reset();
-  imgUploadPreview.src = '';
-}
 
 export { onEditPopupEsc };
