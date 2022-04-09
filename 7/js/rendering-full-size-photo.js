@@ -44,7 +44,7 @@ const commentsCount = fullSizePopupContainer.querySelector('.comments-count');
 /**
  * Количество комментариев у фотографии - сколько показано на данный момент
  */
-const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show');
+/* const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'); */
 /**
  * Кнопка для загрузки новой порции комментариев
  * @type {Element | null}
@@ -52,48 +52,14 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
-let commentsCounter = 0;
-let comments = [];
-
+/* let comments = [];
+ */
 const onBigPhotoEsc = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     hidePhotoPopup();
   }
 };
-
-/* function renderCommentList (list, container) {
-  container.innerHTML = '';
-
-  const commentsList = list.slice();
-
-  if (commentsList.length <= COMMENT_COUNT) {
-    moreCommentsButton.classList.add('hidden');
-  } else {
-    moreCommentsButton.classList.remove('hidden');
-  }
-
-  const commentsPack = commentsList.splice(0, COMMENT_COUNT);
-  let commentsCount = commentsPack.length;
-
-  container.appendChild(addToFragment(commentsPack));
-
-  commentsCountElement.innerHTML = `${commentsCount} из <span class="comments-count">${list.length}</span> комментариев`;
-
-  moreCommentsButton.addEventListener('click', () => {
-    const addCommentsPack = commentsList.splice(0, COMMENT_COUNT);
-    const addCommentsCount = addCommentsPack.length;
-    container.appendChild(addToFragment(addCommentsPack));
-    commentsCount += addCommentsCount;
-    commentsCountElement.innerHTML = `${commentsCount} из <span class="comments-count">${list.length}</span> комментариев`;
-    if (commentsCount === list.length) {
-      moreCommentsButton.classList.add('hidden');
-    } else {
-      moreCommentsButton.classList.remove('hidden');
-    }
-  });
-}
- */
 
 /**
  * @description Функция по отрисовке комментарив пользователей
@@ -136,9 +102,9 @@ function showCommentsLoader() {
   commentsLoader.addEventListener('click', () => { });
 }
 
-function onCommentsButtonClick() {
+/* function onCommentsButtonClick() {
   renderComments(comments.splice(0, COMMENTS_LIMIT));
-}
+} */
 
 /**
  * @description Функция показа окна с полноразмерным изображением и заполнением поста данными
@@ -160,7 +126,6 @@ function showPhotoPopup(post) {
   }
 
   const commentsFive = post.comments.splice(0, COMMENTS_LIMIT);
-  console.log(commentsFive);
   renderComments(commentsFive);
 
   document.addEventListener('keydown', onBigPhotoEsc);
