@@ -146,5 +146,3 @@ function hidePhotoPopup() {
 buttonCancel.addEventListener('click', hidePhotoPopup);
 
 export { showPhotoPopup };
-
-
