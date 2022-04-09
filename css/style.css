@@ -1263,6 +1263,7 @@ main {
   margin-bottom: 50px;
 
   font-size: 32px;
+  line-height: 32px;
 }
 
 .error__title::before {
@@ -1416,3 +1417,15 @@ main {
 .hidden {
   display: none;
 }
+
+/* Оформление текста об ошибке ( валидация хеш-тегов, комментов********/
+
+.pristine-error.error-text {
+  text-transform: none;
+  margin-top: 0;
+}
+
+.is-invalid {
+  color: red;
+}
+

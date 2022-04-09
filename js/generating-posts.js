@@ -1,5 +1,5 @@
-import {getRandomIntInclusive, getRandomArrayElement} from './util.js';
-import {makeComment} from './generating-comments.js';
+import { getRandomIntInclusive, getRandomArrayElement } from './util.js';
+import { makeComment } from './generating-comments.js';
 
 const POST_DESCRIPTIONS = [
   'Следуй за своим сердцем, но не забывай брать с собой мозг',
@@ -23,7 +23,7 @@ const LIKES_MIN_QUANTITY = 15;
 const LIKES_MAX_QUANTITY = 200;
 
 const COMMENT_MIN_ID = 1;
-const COMMENT_MAX_ID = 18;
+const COMMENT_MAX_ID = 20;
 
 const POSTS_PHOTO_COUNT = 25;
 
@@ -42,4 +42,4 @@ const makePost = (_, index) => {
 
 const makeUserPosts = () => Array.from({ length: POSTS_PHOTO_COUNT }, makePost);
 
-export {makeUserPosts};
+export { makeUserPosts };
