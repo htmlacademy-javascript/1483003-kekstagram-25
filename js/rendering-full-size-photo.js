@@ -53,9 +53,7 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
-let commentsCounter = 0;
 let copyComments = [];
-/* let comments = []; */
 
 const onBigPhotoEsc = (evt) => {
   if (isEscapeKey(evt)) {
@@ -64,47 +62,13 @@ const onBigPhotoEsc = (evt) => {
   }
 };
 
-/* function renderCommentList (list, container) {
-  container.innerHTML = '';
-
-  const commentsList = list.slice();
-
-  if (commentsList.length <= COMMENT_COUNT) {
-    moreCommentsButton.classList.add('hidden');
-  } else {
-    moreCommentsButton.classList.remove('hidden');
-  }
-
-  const commentsPack = commentsList.splice(0, COMMENT_COUNT);
-  let commentsCount = commentsPack.length;
-
-  container.appendChild(addToFragment(commentsPack));
-
-  commentsCountElement.innerHTML = `${commentsCount} из <span class="comments-count">${list.length}</span> комментариев`;
-
-  moreCommentsButton.addEventListener('click', () => {
-    const addCommentsPack = commentsList.splice(0, COMMENT_COUNT);
-    const addCommentsCount = addCommentsPack.length;
-    container.appendChild(addToFragment(addCommentsPack));
-    commentsCount += addCommentsCount;
-    commentsCountElement.innerHTML = `${commentsCount} из <span class="comments-count">${list.length}</span> комментариев`;
-    if (commentsCount === list.length) {
-      moreCommentsButton.classList.add('hidden');
-    } else {
-      moreCommentsButton.classList.remove('hidden');
-    }
-  });
-}
- */
-
 /**
  * @description Функция по отрисовке комментарив пользователей
  * @param {array} postComments
  */
 function renderComments(comments) {
-  /* const postComments = copyComments.splice(0, COMMENTS_LIMIT); */
+
   if (!comments.length) {
-    /* hideCommentsLoader(); */
     return;
   }
 
@@ -120,13 +84,6 @@ function renderComments(comments) {
   });
 
   socialComments.append(commentFragment);
-  /* commentsCounter += postComments.length;
-  socialCommentsShow.textContent = commentsCounter; */
-
-
-  /* if (!comments.length) {
-    hideCommentsLoader();
-  } */
 }
 
 function loadMoreComments() {
@@ -137,13 +94,6 @@ function loadMoreComments() {
   const postComments = copyComments.splice(0, COMMENTS_LIMIT);
   renderComments(postComments);
 }
-
-/* hideCommentsLoader(); */
-/* if (!postComments.length) {
-  commentsLoader.classList.add('hidden');
-  hideCommentsLoader();
-} */
-
 
 /**
  * @description Функция скрывает кнопку загрузки доолнительных коментариев, если комментариев меньше COMMENTS_LIMIT
@@ -163,15 +113,6 @@ function showCommentsLoader() {
   commentsLoader.addEventListener('click', loadMoreComments);
 }
 
-/* function onCommentsButtonClick() {
-  if (copyComments.length) {
-    renderComments(copyComments.splice(0, COMMENTS_LIMIT));
-    if (copyComments.length) {
-      hideCommentsLoader();
-    }
-  }
-} */
-
 /**
  * @description Функция показа окна с полноразмерным изображением и заполнением поста данными
  * @param {Object} post - обьект массива
@@ -186,24 +127,9 @@ function showPhotoPopup(post) {
   socialCaption.textContent = post.description;
 
   socialComments.innerHTML = '';
-
-  /* if (post.comments.length <= COMMENTS_LIMIT) {
-    hideCommentsLoader();
-  } else {
-    showCommentsLoader();
-  } */
-
-  /* const copyComments = [...post.comments];   */
   copyComments = [...post.comments];
-  /* const commentsFive = copyComments.splice(0, COMMENTS_LIMIT);
- */
-  loadMoreComments();
 
-  /* if (!copyComments.length) {
-    hideCommentsLoader();
-  } else {
-    showCommentsLoader();
-  } */
+  loadMoreComments();
 
   document.addEventListener('keydown', onBigPhotoEsc);
 }
