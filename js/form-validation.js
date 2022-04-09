@@ -56,7 +56,7 @@ imageUploadForm.addEventListener('submit', (evt) => {
   if (isValid) {
     imageUploadForm.submit();
     blockSubmitButton();
-    openUploadMessagePopup('success');
+    /* openUploadMessagePopup('success'); */
   } else {
     openUploadMessagePopup('error');
   }
@@ -97,7 +97,7 @@ const isMatchRegExp = (arrayItem) => {
  * @param {string} value
  * @returns {boolean}
  */
-const validateRegExp = (value) => {
+const validateHashtagRegExp = (value) => {
   if (value === '') {
     return true;
   }
@@ -125,7 +125,7 @@ const validateComment = (value) => checkStringMaxLength(value, COMMENT_MAX_LENGT
 
 pristine.addValidator(hashtagsField, checkLengthHashtags, `Не более ${HASHTAGS_MAX_QUANTITY} хеш-тегов`, 1, false);
 pristine.addValidator(hashtagsField, checkLengthOneHashtag, `Длина хештега не должна превышать ${HASHTAGS_MAX_LENGTH} символов`, 1, true);
-pristine.addValidator(hashtagsField, validateRegExp, 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.', 1, false);
+pristine.addValidator(hashtagsField, validateHashtagRegExp, 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.', 1, false);
 pristine.addValidator(hashtagsField, hasDuplicateHashtag, 'Хеш-теги не должны повторяться', 1, false);
 pristine.addValidator(commentField, validateComment, `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`, 1, false);
 
