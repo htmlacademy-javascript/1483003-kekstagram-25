@@ -49,7 +49,7 @@ const commentsCount = fullSizePopupContainer.querySelector('.comments-count');
  * Количество комментариев у фотографии - сколько показано на данный момент
  *
  */
-const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show');
+/* const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'); */
 /**
  * Кнопка для загрузки новой порции комментариев
  * @type {Element | null}
@@ -57,7 +57,13 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
-let copyComments = [];
+
+const onBigPhotoEsc = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    hidePhotoPopup();
+  }
+};
 
 /**
  * @description Функция по отрисовке комментарив пользователей
@@ -128,7 +134,7 @@ const showPhotoPopup = (post) => {
   socialComments.innerHTML = '';
   copyComments = [...post.comments];
   loadMoreComments();
-
+  
   document.addEventListener('keydown', onBigPhotoEsc);
 };
 
@@ -153,5 +159,3 @@ function onBigPhotoEsc(evt) {
 buttonCancel.addEventListener('click', hidePhotoPopup);
 
 export { showPhotoPopup };
-
-
