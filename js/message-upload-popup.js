@@ -1,14 +1,5 @@
 import { isEscapeKey } from './util.js';
 
-/**
- * @description Функция поиска шаблона на странице
- * @param {HTMLElement} parent - блок в котором ищем шаблон
- * @param {string} templateId - id шаблона
- * @param {string} elementClass - класс секции внутри шаблона
- * @returns {HTMLElement}
- */
-const getTemplateElement = (parent, templateId, elementClass) => parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
-
 const pageBody = document.body;
 /**
  *  Шаблон сообщения с ошибкой загрузки изображения
@@ -18,6 +9,15 @@ const errorUploadTemplate = getTemplateElement(pageBody, 'error', 'error');
  * Шаблон сообщения об успешной загрузке изображения
  */
 const successUploadTemplate = getTemplateElement(pageBody, 'success', 'success');
+
+/**
+ * @description Функция поиска шаблона на странице
+ * @param {HTMLElement} parent - блок в котором ищем шаблон
+ * @param {string} templateId - id шаблона
+ * @param {string} elementClass - класс секции внутри шаблона
+ * @returns {HTMLElement}
+ */
+const getTemplateElement = (parent, templateId, elementClass) => parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
 
 /**
  * @description Функция показа попапа об успешной/неудачной отправке формы

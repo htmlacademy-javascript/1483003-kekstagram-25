@@ -19,7 +19,7 @@ const POST_DESCRIPTIONS = [
   'Мама учила не материться, а жизнь научила не материться при маме',
 ];
 
-const LIKES_MIN_QUANTITY = 15;
+const LIKES_MIN_COUNT = 15;
 const LIKES_MAX_QUANTITY = 200;
 
 const COMMENT_MIN_ID = 1;
@@ -35,7 +35,7 @@ const makePost = (_, index) => {
     id,
     url: `photos/${id}.jpg`,
     description: getRandomArrayElement(POST_DESCRIPTIONS),
-    likes: getRandomIntInclusive(LIKES_MIN_QUANTITY, LIKES_MAX_QUANTITY),
+    likes: getRandomIntInclusive(LIKES_MIN_COUNT, LIKES_MAX_QUANTITY),
     comments: Array.from({ length: getRandomIntInclusive(COMMENT_MIN_ID, COMMENT_MAX_ID) }, makeComment),
   };
 };

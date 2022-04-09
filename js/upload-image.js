@@ -1,8 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
-import { focusIn, focusOut } from './form-validation.js';
-import { onChangeImageEffect } from './image-slider-effects.js';
+
+const DEFAULT_IMAGE_SCALE = 100;
 
 const pageBody = document.body;
 /**
@@ -26,27 +26,13 @@ const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview im
  */
 const uploadCancel = imgUploadSection.querySelector('#upload-cancel');
 /**
- * Поле для ввода хеш-тегов
- */
-const hashtagsField = imgUploadSection.querySelector('.text__hashtags');
-/**
- * Поле для ввода комментариев
- */
-const commentField = imgUploadSection.querySelector('.text__description');
-/**
  * Поле для значения текущего масштаба
  */
 const scaleControlValue = imgUploadSection.querySelector('.scale__control--value');
 /**
- *  Список эффектов накладываемых на изображение
+ * Форма ввода данных
  */
-const effectsList = imgUploadSection.querySelector('.effects__list');
-/**
- * Блок для вставки слайдера
- */
-const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
-
-const DEFAULT_IMAGE_SCALE = 100;
+const imageUploadForm = document.querySelector('#upload-select-image');
 
 function onEditPopupEsc(evt) {
   if (isEscapeKey(evt)) {
@@ -97,12 +83,6 @@ function openImageEditPopup() {
 
   effectsList.addEventListener('click', onChangeImageEffect);
 
-  hashtagsField.addEventListener('focusin', focusIn);
-  hashtagsField.addEventListener('focusout', focusOut);
-
-  commentField.addEventListener('focusin', focusIn);
-  commentField.addEventListener('focusout', focusOut);
-
   const fileReader = new FileReader();
   fileReader.onload = function (evt) {
     imgUploadPreview.src = evt.target.result;
@@ -123,12 +103,6 @@ function closeImageEditPopup() {
   effectLevelSlider.noUiSlider.destroy();
 
   clearEnterData();
-
-  hashtagsField.removeEventListener('focusin', focusIn);
-  hashtagsField.removeEventListener('focusout', focusOut);
-
-  commentField.removeEventListener('focusin', focusIn);
-  commentField.removeEventListener('focusout', focusOut);
 }
 
 uploadFileInputElement.addEventListener('change', openImageEditPopup);
@@ -141,11 +115,8 @@ function clearEnterData() {
   scaleControlValue.value = `${DEFAULT_IMAGE_SCALE}%`;
   imgUploadPreview.style = 'transform: scale(1)';
 
+  imageUploadForm.reset();
   imgUploadPreview.src = '';
-  imgUploadPreview.className = '';
-
-  hashtagsField.value = '';
-  commentField.value = '';
 }
 
 export { onEditPopupEsc };
