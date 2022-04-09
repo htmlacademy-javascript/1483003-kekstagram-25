@@ -1,8 +1,5 @@
 import { onEditPopupEsc } from './upload-image.js';
-/* import { openErrorPopup } from './error-upload-popup.js';
-import { openSuccessPopup } from './success-upload-popup.js'; */
 
-/* const pageBody = document.body; */
 /**
  * Форма для загрузки изображения
  */
@@ -19,14 +16,6 @@ const hashtagsField = imageUploadForm.querySelector('.text__hashtags');
  * Поле для ввода комментариев
  */
 const commentField = imageUploadForm.querySelector('.text__description');
-/**
- * Поле для значения текущего масштаба
- */
-/* const scaleControlValue = imageUploadForm.querySelector('.scale__control--value'); */
-/**
- * Изображение для редактирования
- */
-/* const imgUploadPreview = imageUploadForm.querySelector('.img-upload__preview').querySelector('img'); */
 
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAGS_MAX_QUANTITY = 5;
@@ -59,6 +48,7 @@ imageUploadForm.addEventListener('submit', (evt) => {
   if (isValid) {
     /* closeEditPopup();
     openSuccessPopup(); */
+    imageUploadForm.submit();
     // Все данные приходят в изначальный вид
   } else {
     /* closeEditPopup();
@@ -75,11 +65,7 @@ function checkLengthHashtag(arrHashtags) {
   return arrHashtags.length <= HASHTAGS_MAX_QUANTITY;
 }
 
-pristine.addValidator(
-  hashtagsField,
-  checkLengthHashtag,
-  `Не более ${HASHTAGS_MAX_QUANTITY} хеш-тегов`
-);
+pristine.addValidator(hashtagsField, checkLengthHashtag, `Не более ${HASHTAGS_MAX_QUANTITY} хеш-тегов`);
 
 /**
  * @description Функция проверки строки на соответствие условиям регулярного выражения
@@ -97,15 +83,11 @@ function isMatchRegExp(arrayItem) {
  * @param {array} array - массив элементов
  * @returns {boolean}
  */
-function validateRegExp(array) {
+function validateRegExp() {
   return array.every(isMatchRegExp);
 }
 
-pristine.addValidator(
-  hashtagsField,
-  validateRegExp,
-  'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.'
-);
+pristine.addValidator(hashtagsField, validateRegExp, 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.');
 
 /**
  * @description Функция проверяет, чтобы один и тот же хэш-тег не был использован дважды
@@ -114,12 +96,6 @@ pristine.addValidator(
  */
 function hasDuplicate(array) {
 
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === array[i + 1]) {
-      return true;
-    }
-  }
-  return false;
 }
 
 /* const userPostHashtags = hashtagsField.value;
@@ -148,19 +124,15 @@ function validateComment(value) {
   return value.length <= COMMENT_MAX_LENGTH;
 }
 
-pristine.addValidator(
-  commentField,
-  validateComment,
-  `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`
-);
+pristine.addValidator(commentField, validateComment, `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`);
 
 export { focusIn, focusOut };
 
 // хэш-тег начинается с символа # (решётка); +++
 // строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.;  +++
-// хеш-тег не может состоять только из одной решётки;
+// хеш-тег не может состоять только из одной решётки;  +++
 // максимальная длина одного хэш-тега 20 символов, включая решётку; +++
-// хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
+// хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом; +++
 // хэш-теги разделяются пробелами;
 // один и тот же хэш-тег не может быть использован дважды;
 // нельзя указать больше пяти хэш-тегов; +++

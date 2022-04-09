@@ -7,12 +7,9 @@ import { isEscapeKey } from './util.js';
  * @param {string} elementClass - класс секции внутри шаблона
  * @returns {HTMLElement}
  */
-function getTemplateElement(parent, templateId, elementClass) {
-  return parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
-}
+const getTemplateElement = (parent, templateId, elementClass) => parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
 
 const pageBody = document.body;
-
 /**
  *  Шаблон сообщения с ошибкой загрузки изображения
  */
@@ -28,7 +25,7 @@ const successUploadTemplate = getTemplateElement(pageBody, 'success', 'success')
  * @param {string} message
  * @param {string} buttonText
  */
-function openUploadMessagePopup(popupType/* , message, buttonText */) {
+const openUploadMessagePopup = (popupType/* , message, buttonText */) => {
 
   let popupTemplate;
   let popupInnerSection;
@@ -51,28 +48,28 @@ function openUploadMessagePopup(popupType/* , message, buttonText */) {
   const innerPopupSection = innerPopup.querySelector(popupInnerSection);
   const popupButton = innerPopup.querySelector(popupButtonElementClass);
 
-  function closeUploadMessagePopup() {
+  const closeUploadMessagePopup = () => {
     popupButton.removeEventListener('click', closeUploadMessagePopup);
     innerPopup.remove();
-  }
+  };
 
-  function onUploadMessagePopupEsc(evt) {
+  const onUploadMessagePopupEsc = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeUploadMessagePopup();
     }
-  }
+  };
 
   /**
   * @description Функция проверки, что событие (клик) было вне области блока
   * @param {MouseEvent} evt
   */
-  function onOutsideClick(evt) {
+  const onOutsideClick = (evt) => {
     const isOutsideClick = !evt.composedPath().includes(innerPopupSection);
     if (isOutsideClick) {
       closeUploadMessagePopup();
     }
-  }
+  };
 
   document.addEventListener('keydown', onUploadMessagePopupEsc, { once: true });
   document.addEventListener('click', onOutsideClick, { once: true });
@@ -80,6 +77,6 @@ function openUploadMessagePopup(popupType/* , message, buttonText */) {
   popupButton.addEventListener('click', closeUploadMessagePopup);
 
   pageBody.appendChild(innerPopup);
-}
+};
 
 export { openUploadMessagePopup };

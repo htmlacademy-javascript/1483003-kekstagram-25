@@ -8,7 +8,7 @@ import './image-slider-effects.js';
 const userPosts = makeUserPosts();
 renderUsersPosts(userPosts);
 
-console.log(userPosts);
+/* console.log(userPosts);
 
 
 const sentence = document.querySelector('.social__text');
@@ -24,7 +24,7 @@ const sliceMethod = mapMethod.slice(0, 3);
 
 mapMethod.every(
   (word, index) => word === word[index + 1]
-);
+); */
 
 // mapMethod.every(word, index => word === word[index + 1]);
 
@@ -37,10 +37,10 @@ mapMethod.every(
 
 // const copyArr = arrText.splice(0, 3);
 
-console.log(mapMethod);
+/* console.log(mapMethod);
 console.log(arrText);
 console.log(sliceMethod);
-
+ */
 
 /* const pageBody = document.body;
 const uploadFileInputElement = document.querySelector('#upload-file');
@@ -65,5 +65,4 @@ uploadFileInputElement.addEventListener('change', function () {
   fileReader.readAsDataURL(file);
 
 }); */
-
 

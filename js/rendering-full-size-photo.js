@@ -43,6 +43,7 @@ const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
 const commentsCount = fullSizePopupContainer.querySelector('.comments-count');
 /**
  * Количество комментариев у фотографии - сколько показано на данный момент
+ *
  */
 const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show');
 /**
@@ -53,7 +54,8 @@ const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
 const COMMENTS_LIMIT = 5;
 let commentsCounter = 0;
-let comments = [];
+let copyComments = [];
+/* let comments = []; */
 
 const onBigPhotoEsc = (evt) => {
   if (isEscapeKey(evt)) {
@@ -99,24 +101,49 @@ const onBigPhotoEsc = (evt) => {
  * @description Функция по отрисовке комментарив пользователей
  * @param {array} postComments
  */
-function renderComments(postComments) {
+function renderComments(comments) {
+  /* const postComments = copyComments.splice(0, COMMENTS_LIMIT); */
+  if (!comments.length) {
+    /* hideCommentsLoader(); */
+    return;
+  }
 
   const commentFragment = document.createDocumentFragment();
 
-  postComments.forEach((postComment) => {
+  comments.forEach((comment) => {
     const commentItem = socialOneComment.cloneNode(true);
 
-    commentItem.querySelector('.social__picture').src = postComment.avatar;
-    commentItem.querySelector('.social__text').textContent = postComment.message;
+    commentItem.querySelector('.social__picture').src = comment.avatar;
+    commentItem.querySelector('.social__text').textContent = comment.message;
 
     commentFragment.append(commentItem);
   });
 
-  socialComments.innerHTML = '';
   socialComments.append(commentFragment);
   /* commentsCounter += postComments.length;
   socialCommentsShow.textContent = commentsCounter; */
+
+
+  /* if (!comments.length) {
+    hideCommentsLoader();
+  } */
 }
+
+function loadMoreComments() {
+  showCommentsLoader();
+  if (copyComments.length <= COMMENTS_LIMIT) {
+    hideCommentsLoader();
+  }
+  const postComments = copyComments.splice(0, COMMENTS_LIMIT);
+  renderComments(postComments);
+}
+
+/* hideCommentsLoader(); */
+/* if (!postComments.length) {
+  commentsLoader.classList.add('hidden');
+  hideCommentsLoader();
+} */
+
 
 /**
  * @description Функция скрывает кнопку загрузки доолнительных коментариев, если комментариев меньше COMMENTS_LIMIT
@@ -124,7 +151,7 @@ function renderComments(postComments) {
  */
 function hideCommentsLoader() {
   commentsLoader.classList.add('hidden');
-  commentsLoader.removeEventListener('click', () => { });
+  commentsLoader.removeEventListener('click', loadMoreComments);
 }
 
 /**
@@ -133,12 +160,17 @@ function hideCommentsLoader() {
  */
 function showCommentsLoader() {
   commentsLoader.classList.remove('hidden');
-  commentsLoader.addEventListener('click', () => { });
+  commentsLoader.addEventListener('click', loadMoreComments);
 }
 
-function onCommentsButtonClick() {
-  renderComments(comments.splice(0, COMMENTS_LIMIT));
-}
+/* function onCommentsButtonClick() {
+  if (copyComments.length) {
+    renderComments(copyComments.splice(0, COMMENTS_LIMIT));
+    if (copyComments.length) {
+      hideCommentsLoader();
+    }
+  }
+} */
 
 /**
  * @description Функция показа окна с полноразмерным изображением и заполнением поста данными
@@ -153,15 +185,25 @@ function showPhotoPopup(post) {
   commentsCount.textContent = post.comments.length;
   socialCaption.textContent = post.description;
 
-  if (post.comments.length <= COMMENTS_LIMIT) {
+  socialComments.innerHTML = '';
+
+  /* if (post.comments.length <= COMMENTS_LIMIT) {
     hideCommentsLoader();
   } else {
     showCommentsLoader();
-  }
+  } */
 
-  const commentsFive = post.comments.splice(0, COMMENTS_LIMIT);
-  console.log(commentsFive);
-  renderComments(commentsFive);
+  /* const copyComments = [...post.comments];   */
+  copyComments = [...post.comments];
+  /* const commentsFive = copyComments.splice(0, COMMENTS_LIMIT);
+ */
+  loadMoreComments();
+
+  /* if (!copyComments.length) {
+    hideCommentsLoader();
+  } else {
+    showCommentsLoader();
+  } */
 
   document.addEventListener('keydown', onBigPhotoEsc);
 }
@@ -175,7 +217,6 @@ function hidePhotoPopup() {
   pageBody.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onBigPhotoEsc);
-
 }
 
 buttonCancel.addEventListener('click', hidePhotoPopup);

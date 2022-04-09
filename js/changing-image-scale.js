@@ -14,8 +14,9 @@ const scaleControlValue = imgUploadPreviewContainer.querySelector('.scale__contr
 /**
  * Изображение для редактирования
  */
-const imgUploadPreview = imgUploadPreviewContainer.querySelector('.img-upload__preview').querySelector('img');
+const imgUploadPreview = imgUploadPreviewContainer.querySelector('.img-upload__preview img');
 
+const SCALE_DEFAULT= 100;
 const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
@@ -44,6 +45,7 @@ const onIncreaseScale = () => {
 };
 
 const addScaleHandler = () => {
+  scaleControlValue.value = `${SCALE_DEFAULT}%`;
   scaleControlSmaller.addEventListener('click', onReduceScale);
   scaleControlBigger.addEventListener('click', onIncreaseScale);
 };

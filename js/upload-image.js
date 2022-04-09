@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
 import { focusIn, focusOut } from './form-validation.js';
+import { onChangeImageEffect } from './image-slider-effects.js';
 
 const pageBody = document.body;
 /**
@@ -36,6 +37,14 @@ const commentField = imgUploadSection.querySelector('.text__description');
  * Поле для значения текущего масштаба
  */
 const scaleControlValue = imgUploadSection.querySelector('.scale__control--value');
+/**
+ *  Список эффектов накладываемых на изображение
+ */
+const effectsList = imgUploadSection.querySelector('.effects__list');
+/**
+ * Блок для вставки слайдера
+ */
+const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
 
 const DEFAULT_IMAGE_SCALE = 100;
 
@@ -65,6 +74,29 @@ function openImageEditPopup() {
   document.addEventListener('keydown', onEditPopupEsc);
   uploadCancel.addEventListener('click', closeImageEditPopup);
 
+  noUiSlider.create(effectLevelSlider, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 1,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
+  });
+
+  effectsList.addEventListener('click', onChangeImageEffect);
+
   hashtagsField.addEventListener('focusin', focusIn);
   hashtagsField.addEventListener('focusout', focusOut);
 
@@ -87,6 +119,9 @@ function closeImageEditPopup() {
   removeScaleHandler();
   document.removeEventListener('keydown', onEditPopupEsc);
 
+  effectsList.removeEventListener('click', onChangeImageEffect);
+  effectLevelSlider.noUiSlider.destroy();
+
   clearEnterData();
 
   hashtagsField.removeEventListener('focusin', focusIn);
@@ -105,6 +140,9 @@ uploadFileInputElement.addEventListener('change', openImageEditPopup);
 function clearEnterData() {
   scaleControlValue.value = `${DEFAULT_IMAGE_SCALE}%`;
   imgUploadPreview.style = 'transform: scale(1)';
+
+  imgUploadPreview.src = '';
+  imgUploadPreview.className = '';
 
   hashtagsField.value = '';
   commentField.value = '';
