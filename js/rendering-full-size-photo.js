@@ -125,7 +125,6 @@ const showPhotoPopup = (post) => {
   socialComments.innerHTML = '';
   copyComments = [...post.comments];
   loadMoreComments();
-
   document.addEventListener('keydown', onBigPhotoEsc);
 };
 
