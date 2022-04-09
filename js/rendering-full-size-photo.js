@@ -46,7 +46,7 @@ const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
 const commentsCount = fullSizePopupContainer.querySelector('.comments-count');
 /**
  * Количество комментариев у фотографии - сколько показано на данный момент
- *
+ * @type {Element | null}
  */
 const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show');
 /**
@@ -54,8 +54,6 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
  * @type {Element | null}
  */
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
-
-/* console.log(socialShowComment); */
 
 /**
  * @description Функция по отрисовке комментарив пользователей

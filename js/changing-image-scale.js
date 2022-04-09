@@ -1,3 +1,7 @@
+const SCALE_STEP = 25;
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+
 const imgUploadPreviewContainer = document.querySelector('.img-upload__preview-container');
 /**
  * Кнопка для уменьшения масштаба изображения
@@ -14,11 +18,7 @@ const scaleControlValue = imgUploadPreviewContainer.querySelector('.scale__contr
 /**
  * Изображение для редактирования
  */
-const imgUploadPreview = imgUploadPreviewContainer.querySelector('.img-upload__preview').querySelector('img');
-
-const SCALE_STEP = 25;
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
+const imgUploadPreview = imgUploadPreviewContainer.querySelector('.img-upload__preview img');
 
 /**
  * @description Функция уменьшения масштаба изображения

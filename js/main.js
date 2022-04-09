@@ -7,4 +7,3 @@ import './image-slider-effects.js';
 
 const userPosts = makeUserPosts();
 renderUsersPosts(userPosts);
-
