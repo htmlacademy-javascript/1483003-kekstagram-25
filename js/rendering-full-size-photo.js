@@ -32,6 +32,10 @@ const socialComments = fullSizePopupContainer.querySelector('.social__comments')
  */
 const socialOneComment = fullSizePopupContainer.querySelector('.social__comment');
 /**
+ * Комментарии отрисованные в текущий момент
+ */
+const socialShowComment = fullSizePopupContainer.querySelectorAll('.social__comment');
+/**
  * Описание фотографии
  * @type {Element | null}
  */
@@ -105,6 +109,7 @@ function loadMoreComments() {
   }
   const postComments = copyComments.splice(0, COMMENTS_LIMIT);
   renderComments(postComments);
+  socialCommentsShow.textContent = socialShowComment.length;
 }
 
 /**
