@@ -1,5 +1,8 @@
 import { isEscapeKey } from './util.js';
 
+const COMMENTS_LIMIT = 5;
+let copyComments = [];
+
 const pageBody = document.body;
 /**
  * Секция полноэкранного показа изображения
@@ -32,10 +35,6 @@ const socialComments = fullSizePopupContainer.querySelector('.social__comments')
  */
 const socialOneComment = fullSizePopupContainer.querySelector('.social__comment');
 /**
- * Комментарии отрисованные в текущий момент
- */
-const socialShowComment = fullSizePopupContainer.querySelectorAll('.social__comment');
-/**
  * Описание фотографии
  * @type {Element | null}
  */
@@ -56,8 +55,7 @@ const socialCommentsShow = fullSizePopupContainer.querySelector('.comments-show'
  */
 const commentsLoader = fullSizePopupContainer.querySelector('.comments-loader');
 
-const COMMENTS_LIMIT = 5;
-let copyComments = [];
+/* console.log(socialShowComment); */
 
 /**
  * @description Функция по отрисовке комментарив пользователей
@@ -104,12 +102,13 @@ const hideCommentsLoader = () => {
  */
 function loadMoreComments() {
   showCommentsLoader();
-  if (copyComments.length <= COMMENTS_LIMIT) {
+
+  renderComments(copyComments.splice(0, COMMENTS_LIMIT));
+  socialCommentsShow.textContent = document.querySelectorAll('.social__comment').length;
+
+  if (!copyComments.length) {
     hideCommentsLoader();
   }
-  const postComments = copyComments.splice(0, COMMENTS_LIMIT);
-  renderComments(postComments);
-  socialCommentsShow.textContent = socialShowComment.length;
 }
 
 /**
@@ -153,5 +152,3 @@ function onBigPhotoEsc(evt) {
 buttonCancel.addEventListener('click', hidePhotoPopup);
 
 export { showPhotoPopup };
-
-

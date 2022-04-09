@@ -2,7 +2,6 @@ import { onEditPopupEsc } from './upload-image.js';
 /* import { openErrorPopup } from './error-upload-popup.js';
 import { openSuccessPopup } from './success-upload-popup.js'; */
 
-/* const pageBody = document.body; */
 /**
  * Форма для загрузки изображения
  */
