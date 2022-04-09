@@ -17,7 +17,9 @@ const successUploadTemplate = getTemplateElement(pageBody, 'success', 'success')
  * @param {string} elementClass - класс секции внутри шаблона
  * @returns {HTMLElement}
  */
-const getTemplateElement = (parent, templateId, elementClass) => parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
+function getTemplateElement(parent, templateId, elementClass) {
+  return parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
+}
 
 /**
  * @description Функция показа попапа об успешной/неудачной отправке формы

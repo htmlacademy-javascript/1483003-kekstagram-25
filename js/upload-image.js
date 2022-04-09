@@ -1,6 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
+import { onChangeImageEffect } from './image-slider-effects.js';
 
 const DEFAULT_IMAGE_SCALE = 100;
 
@@ -32,7 +33,13 @@ const scaleControlValue = imgUploadSection.querySelector('.scale__control--value
 /**
  * Форма ввода данных
  */
-const imageUploadForm = document.querySelector('#upload-select-image');
+const imageUploadForm = imgUploadSection.querySelector('#upload-select-image');
+/**
+ * Блок для вставки слайдера
+ */
+const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
+
+const effectsList = imgUploadSection.querySelector('.effects__list');
 
 function onEditPopupEsc(evt) {
   if (isEscapeKey(evt)) {
