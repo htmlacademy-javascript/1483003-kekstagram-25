@@ -1,7 +1,7 @@
-const SCALE_STEP = 25;
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
-const SCALE_DEFAULT = 100;
+const PREVIEW_SCALE_STEP = 25;
+const PREVIEW_MIN_SCALE = 25;
+const PREVIEW_MAX_SCALE = 100;
+const PREVIEW_SCALE_DEFAULT = 100;
 
 const imgUploadPreviewContainer = document.querySelector('.img-upload__preview-container');
 /**
@@ -26,8 +26,8 @@ const imgUploadPreview = imgUploadPreviewContainer.querySelector('.img-upload__p
  */
 const onReduceScale = () => {
   let scale = parseInt(scaleControlValue.value, 10);
-  if (scale > MIN_SCALE) {
-    scale -= SCALE_STEP;
+  if (scale > PREVIEW_MIN_SCALE) {
+    scale -= PREVIEW_SCALE_STEP;
     scaleControlValue.value = `${scale}%`;
     imgUploadPreview.style = `transform: scale(${scale / 100})`;
   }
@@ -37,15 +37,15 @@ const onReduceScale = () => {
  */
 const onIncreaseScale = () => {
   let scale = parseInt(scaleControlValue.value, 10);
-  if (scale < MAX_SCALE) {
-    scale += SCALE_STEP;
+  if (scale < PREVIEW_MAX_SCALE) {
+    scale += PREVIEW_SCALE_STEP;
     scaleControlValue.value = `${scale}%`;
     imgUploadPreview.style = `transform: scale(${scale / 100})`;
   }
 };
 
 const addScaleHandler = () => {
-  scaleControlValue.value = `${SCALE_DEFAULT}%`;
+  scaleControlValue.value = `${PREVIEW_SCALE_DEFAULT}%`;
   scaleControlSmaller.addEventListener('click', onReduceScale);
   scaleControlBigger.addEventListener('click', onIncreaseScale);
 };

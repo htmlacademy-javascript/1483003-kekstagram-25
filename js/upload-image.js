@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
-import { onChangeImageEffect } from './image-slider-effects.js';
+import { onChangeImageEffect, onEffectValueChange } from './image-slider-effects.js';
 
 const DEFAULT_IMAGE_SCALE = 100;
 
@@ -38,8 +38,14 @@ const imageUploadForm = imgUploadSection.querySelector('#upload-select-image');
  * Блок для вставки слайдера
  */
 const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
-
+/**
+ * Блок со списком эффектов
+ */
 const effectsList = imgUploadSection.querySelector('.effects__list');
+/**
+ * Филдсет со всеми эффектами
+ */
+const imgEffectsFieldset = document.querySelector('.img-upload__effects');
 
 /**
  * @description Функция по возвращению всех данных и контрола фильтра к исходному состоянию
@@ -50,6 +56,7 @@ const clearEnterData = () => {
   imgUploadPreview.style = 'transform: scale(1)';
 
   imageUploadForm.reset();
+  /* imgUploadPreview.style.filter = 'none'; */
   imgUploadPreview.src = '';
 };
 
@@ -64,7 +71,7 @@ const closeImageEditPopup = () => {
   removeScaleHandler();
   document.removeEventListener('keydown', onEditPopupEsc);
 
-  effectsList.removeEventListener('click', onChangeImageEffect);
+  imgEffectsFieldset.removeEventListener('click', onChangeImageEffect);
   effectLevelSlider.noUiSlider.destroy();
 
   clearEnterData();
@@ -89,7 +96,7 @@ function openImageEditPopup() {
   document.addEventListener('keydown', onEditPopupEsc);
   uploadCancel.addEventListener('click', closeImageEditPopup);
 
-  noUiSlider.create(effectLevelSlider, {
+  const uiSlider = noUiSlider.create(effectLevelSlider, {
     range: {
       min: 0,
       max: 1,
@@ -110,7 +117,9 @@ function openImageEditPopup() {
     },
   });
 
-  effectsList.addEventListener('click', onChangeImageEffect);
+  uiSlider.on('update', onEffectValueChange);
+
+  imgEffectsFieldset.addEventListener('change', onChangeImageEffect);
 
   const fileReader = new FileReader();
   fileReader.onload = function (evt) {

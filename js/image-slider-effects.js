@@ -1,19 +1,27 @@
 /**
+ * Форма ввода данных
+ */
+const imageUploadForm = document.querySelector('#upload-select-image');
+/**
  * Секция с нужными блоками для удобства поиска
  */
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
+const imgUploadSection = document.querySelector('.img-upload__overlay');
+/**
+ * Полностью весь блок со слайдером
+ */
+const effectSliderContainer = document.querySelector('.img-upload__effect-level');
 /**
  * Блок для вставки слайдера
  */
-const effectLevelSlider = imgUploadOverlay.querySelector('.effect-level__slider');
+const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
 /**
  * Input для записи выбранного значения
  */
-const effectLevelValue = imgUploadOverlay.querySelector('.effect-level__value');
+const effectInputValue = imgUploadSection.querySelector('.effect-level__value');
 /**
  * Изображение для редактирования
  */
-const imgUploadPreview = imgUploadOverlay.querySelector('.img-upload__preview img');
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
 
 const FILTERS_CONFIG = {
   chrome: {
@@ -109,20 +117,18 @@ const FILTERS_CONFIG = {
  */
 const setImageEffect = (effect) => {
   effectLevelSlider.noUiSlider.updateOptions(effect.options);
-  effectLevelSlider.noUiSlider.on('update', (values) => {
-    imgUploadPreview.style.filter = `${effect.style}(${values}${effect.unit})`;
-    effectLevelValue.value = values;
-  });
 };
 
 /**
  * @description Функция сброса значений и блокировки слайдера
  */
-const clearImageEffectr = () => {
+const clearImageEffect = () => {
   imgUploadPreview.style.filter = 'none';
   imgUploadPreview.className = '';
-  effectLevelValue.value = '';
-  effectLevelSlider.setAttribute('disabled', true);
+  effectInputValue.value = '';
+  effectSliderContainer.style.display = 'none';
+  /* effectLevelSlider.style.display = 'none'; */
+  /* effectLevelSlider.setAttribute('disabled', true); */
 };
 
 /**
@@ -130,17 +136,22 @@ const clearImageEffectr = () => {
  * @param {MouseEvent} evt
  */
 const onChangeImageEffect = (evt) => {
-  if (evt.target.matches('input[type="radio"]')) {
-    const effect = evt.target.value;
-    imgUploadPreview.className = '';
-    imgUploadPreview.classList.add(`effects__preview--${effect}`);
-    if (effect === 'none') {
-      clearImageEffectr();
-    } else {
-      effectLevelSlider.removeAttribute('disabled', true);
-      setImageEffect(FILTERS_CONFIG[effect]);
-    }
+  const effect = evt.target.value;
+  imgUploadPreview.className = '';
+  imgUploadPreview.classList.add(`effects__preview--${effect}`);
+  if (effect === 'none') {
+    clearImageEffect();
+  } else {
+    effectSliderContainer.style.display = 'block';
+    /* effectLevelSlider.removeAttribute('disabled', true); */
+    setImageEffect(FILTERS_CONFIG[effect]);
   }
 };
 
-export { onChangeImageEffect };
+const onEffectValueChange = () => {
+  console.log('Привет');
+  /* imgUploadPreview.style.filter = `${effect.style}(${value}${effect.unit})`;
+  effectLevelValue.value = value; */
+};
+
+export { onChangeImageEffect, onEffectValueChange };
