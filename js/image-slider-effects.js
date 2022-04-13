@@ -75,27 +75,6 @@ const FILTERS_CONFIG = {
   },
 };
 
-/* noUiSlider.create(effectLevelSlider, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  start: 1,
-  step: 0.1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
-  },
-}); */
-
 /**
  * @description Функция наложение эффектов на изображение
  * @param {string} effect

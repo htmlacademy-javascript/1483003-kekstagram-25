@@ -153,4 +153,4 @@ commentInput.addEventListener('keydown', (evt) => {
   }
 });
 
-export { unBlockSubmitButton, uploadFormValidate };
+export { uploadFormValidate };
