@@ -27,13 +27,12 @@ const getDataFromServer = (renderFunction) => {
  */
 const sendDataToServer = (formData, onSuccess, onError) => {
   fetch(
-    'https://25.javascript.pages.academ/kekstagram',
+    'https://25.javascript.pages.academy/kekstagram',
     {
       method: 'POST',
       body: formData,
     }
   )
-    /* .then(() => onSuccess()) */
     .then((response) => {
       if (response.ok) {
         onSuccess();

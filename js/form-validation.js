@@ -51,6 +51,10 @@ const pristine = new Pristine(imageUploadForm, {
   errorTextClass: 'error-text'
 });
 
+const uploadFormValidate = () => {
+  pristine.validate();
+};
+
 /**
  * @description Функция проверки количества хеш-тегов - не более HASHTAGS_MAX_QUANTITY
  * @param {string} value
@@ -149,4 +153,4 @@ commentInput.addEventListener('keydown', (evt) => {
   }
 });
 
-export { unBlockSubmitButton };
+export { unBlockSubmitButton, uploadFormValidate };

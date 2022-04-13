@@ -2,6 +2,7 @@ import { isEscapeKey } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
 import { onChangeImageEffect, onEffectValueChange } from './image-slider-effects.js';
+import { uploadFormValidate } from './form-validation.js';
 
 const DEFAULT_IMAGE_SCALE = 100;
 
@@ -42,6 +43,8 @@ const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider'
  * Филдсет со всеми эффектами
  */
 const imgEffectsFieldset = document.querySelector('.img-upload__effects');
+
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
 /**
  * @description Функция по возвращению всех данных и контрола фильтра к исходному состоянию
@@ -85,8 +88,11 @@ function openImageEditPopup() {
     return;
   }
 
+  imgUploadEffectLevel.classList.add('hidden');
+
   uploadPopupContainer.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  uploadFormValidate();
 
   addScaleHandler();
   document.addEventListener('keydown', onEditPopupEsc);

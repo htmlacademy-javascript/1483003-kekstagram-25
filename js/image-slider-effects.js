@@ -112,8 +112,6 @@ const clearImageEffect = () => {
   imgUploadPreview.className = '';
   effectInputValue.value = '';
   effectSliderContainer.classList.add('hidden');
-  /* effectLevelSlider.style.display = 'none'; */
-  /* effectLevelSlider.setAttribute('disabled', true); */
 };
 
 /**
@@ -128,15 +126,20 @@ const onChangeImageEffect = (evt) => {
     clearImageEffect();
   } else {
     effectSliderContainer.classList.remove('hidden');
-    /* effectLevelSlider.removeAttribute('disabled', true); */
     setImageEffect(FILTERS_CONFIG[effect]);
   }
 };
 
-const onEffectValueChange = () => {
-  console.log('Привет');
-  /* imgUploadPreview.style.filter = `${effect.style}(${value}${effect.unit})`;
-  effectLevelValue.value = value; */
+const onEffectValueChange = (handlersValue) => {
+  const value = handlersValue[0];
+  const effectName = imageUploadForm.effect.value;
+  if (effectName === 'none') {
+    return;
+  }
+  const filterName = FILTERS_CONFIG[effectName].style;
+  const filterUnits = FILTERS_CONFIG[effectName].unit;
+  imgUploadPreview.style.filter = `${filterName}(${value}${filterUnits})`;
+  effectInputValue.value = value;
 };
 
 export { onChangeImageEffect, onEffectValueChange };
