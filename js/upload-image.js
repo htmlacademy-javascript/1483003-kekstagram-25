@@ -1,7 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
 import { addScaleHandler, removeScaleHandler } from './changing-image-scale.js';
-import { onChangeImageEffect } from './image-slider-effects.js';
+import { onChangeImageEffect, onEffectValueChange } from './image-slider-effects.js';
+import { uploadFormValidate } from './form-validation.js';
 
 const DEFAULT_IMAGE_SCALE = 100;
 
@@ -38,8 +39,12 @@ const imageUploadForm = imgUploadSection.querySelector('#upload-select-image');
  * Блок для вставки слайдера
  */
 const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
+/**
+ * Филдсет со всеми эффектами
+ */
+const imgEffectsFieldset = document.querySelector('.img-upload__effects');
 
-const effectsList = imgUploadSection.querySelector('.effects__list');
+const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level');
 
 /**
  * @description Функция по возвращению всех данных и контрола фильтра к исходному состоянию
@@ -50,6 +55,7 @@ const clearEnterData = () => {
   imgUploadPreview.style = 'transform: scale(1)';
 
   imageUploadForm.reset();
+  imgUploadPreview.style.filter = 'none';
   imgUploadPreview.src = '';
 };
 
@@ -64,7 +70,7 @@ const closeImageEditPopup = () => {
   removeScaleHandler();
   document.removeEventListener('keydown', onEditPopupEsc);
 
-  effectsList.removeEventListener('click', onChangeImageEffect);
+  imgEffectsFieldset.removeEventListener('change', onChangeImageEffect);
   effectLevelSlider.noUiSlider.destroy();
 
   clearEnterData();
@@ -82,18 +88,18 @@ function openImageEditPopup() {
     return;
   }
 
+  imgUploadEffectLevel.classList.add('hidden');
+
   uploadPopupContainer.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  uploadFormValidate();
 
   addScaleHandler();
   document.addEventListener('keydown', onEditPopupEsc);
   uploadCancel.addEventListener('click', closeImageEditPopup);
 
-  noUiSlider.create(effectLevelSlider, {
-    range: {
-      min: 0,
-      max: 1,
-    },
+  const uiSlider = noUiSlider.create(effectLevelSlider, {
+    range: {min: 0, max: 1,},
     start: 1,
     step: 0.1,
     connect: 'lower',
@@ -110,7 +116,9 @@ function openImageEditPopup() {
     },
   });
 
-  effectsList.addEventListener('click', onChangeImageEffect);
+  uiSlider.on('update', onEffectValueChange);
+
+  imgEffectsFieldset.addEventListener('change', onChangeImageEffect);
 
   const fileReader = new FileReader();
   fileReader.onload = function (evt) {
@@ -129,4 +137,4 @@ function onEditPopupEsc(evt) {
 
 uploadFileInputElement.addEventListener('change', openImageEditPopup);
 
-export { onEditPopupEsc };
+export { onEditPopupEsc, closeImageEditPopup };
