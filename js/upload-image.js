@@ -39,10 +39,6 @@ const imageUploadForm = imgUploadSection.querySelector('#upload-select-image');
  */
 const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
 /**
- * Блок со списком эффектов
- */
-const effectsList = imgUploadSection.querySelector('.effects__list');
-/**
  * Филдсет со всеми эффектами
  */
 const imgEffectsFieldset = document.querySelector('.img-upload__effects');
@@ -56,7 +52,7 @@ const clearEnterData = () => {
   imgUploadPreview.style = 'transform: scale(1)';
 
   imageUploadForm.reset();
-  /* imgUploadPreview.style.filter = 'none'; */
+  imgUploadPreview.style.filter = 'none';
   imgUploadPreview.src = '';
 };
 
@@ -71,7 +67,7 @@ const closeImageEditPopup = () => {
   removeScaleHandler();
   document.removeEventListener('keydown', onEditPopupEsc);
 
-  imgEffectsFieldset.removeEventListener('click', onChangeImageEffect);
+  imgEffectsFieldset.removeEventListener('change', onChangeImageEffect);
   effectLevelSlider.noUiSlider.destroy();
 
   clearEnterData();
@@ -97,10 +93,7 @@ function openImageEditPopup() {
   uploadCancel.addEventListener('click', closeImageEditPopup);
 
   const uiSlider = noUiSlider.create(effectLevelSlider, {
-    range: {
-      min: 0,
-      max: 1,
-    },
+    range: {min: 0, max: 1,},
     start: 1,
     step: 0.1,
     connect: 'lower',
@@ -138,4 +131,4 @@ function onEditPopupEsc(evt) {
 
 uploadFileInputElement.addEventListener('change', openImageEditPopup);
 
-export { onEditPopupEsc };
+export { onEditPopupEsc, closeImageEditPopup };

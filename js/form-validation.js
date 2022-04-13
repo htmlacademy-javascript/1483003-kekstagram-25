@@ -1,5 +1,7 @@
 import { isEscapeKey, checkStringMaxLength } from './util.js';
 import { openUploadMessagePopup } from './message-upload-popup.js';
+import { sendDataToServer } from './server-api.js';
+import { closeImageEditPopup } from './upload-image.js';
 
 const REGULAR_EXPRESSION = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const COMMENT_MAX_LENGTH = 140;
@@ -35,10 +37,10 @@ const blockSubmitButton = () => {
 /**
  * Разблокировка кнопки формы на время ожидания ответа сервера
  */
-/* const unBlockSubmitButton = () => {
+const unBlockSubmitButton = () => {
   uploadSubmitButton.disabled = false;
   uploadSubmitButton.textContent = 'Опубликовать';
-}; */
+};
 
 const pristine = new Pristine(imageUploadForm, {
   classTo: 'text__group',
@@ -47,18 +49,6 @@ const pristine = new Pristine(imageUploadForm, {
   errorTextParent: 'text__group',
   errorTextTag: 'p',
   errorTextClass: 'error-text'
-});
-
-imageUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    imageUploadForm.submit();
-    blockSubmitButton();
-    openUploadMessagePopup('success');
-    return;
-  }
-  openUploadMessagePopup('error');
 });
 
 /**
@@ -119,6 +109,32 @@ pristine.addValidator(hashtagsInput, validateIsDuplicateHashtags, 'Хеш-тег
 pristine.addValidator(commentInput, validateComment, `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`, 1, false);
 
 
+// Добавление обработчика на отпракву формы
+imageUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    return;
+  }
+
+  const formData = new FormData(evt.target);
+  blockSubmitButton();
+
+  const onSuccess = () => {
+    closeImageEditPopup();
+    unBlockSubmitButton();
+    openUploadMessagePopup('success');
+  };
+
+  const onError = () => {
+    closeImageEditPopup();
+    unBlockSubmitButton();
+    openUploadMessagePopup('error');
+  };
+
+  sendDataToServer(formData, onSuccess, onError);
+});
+
 // Отмена закрытия модального окана, когда фокус в поле ввода хеш-тегов
 hashtagsInput.addEventListener('keydown', (evt) => {
   if (isEscapeKey(evt)) {
@@ -132,3 +148,5 @@ commentInput.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
+
+export { unBlockSubmitButton };

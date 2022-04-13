@@ -26,10 +26,7 @@ const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview im
 const FILTERS_CONFIG = {
   chrome: {
     options: {
-      range: {
-        min: 0,
-        max: 1,
-      },
+      range: { min: 0, max: 1, },
       start: 1,
       step: 0.1,
     },
@@ -39,10 +36,7 @@ const FILTERS_CONFIG = {
 
   sepia: {
     options: {
-      range: {
-        min: 0,
-        max: 1,
-      },
+      range: { min: 0, max: 1, },
       start: 1,
       step: 0.1,
     },
@@ -52,10 +46,7 @@ const FILTERS_CONFIG = {
 
   marvin: {
     options: {
-      range: {
-        min: 0,
-        max: 100,
-      },
+      range: { min: 0, max: 100, },
       start: 100,
       step: 1,
     },
@@ -65,10 +56,7 @@ const FILTERS_CONFIG = {
 
   phobos: {
     options: {
-      range: {
-        min: 0,
-        max: 3,
-      },
+      range: { min: 0, max: 3, },
       start: 3,
       step: 0.1,
     },
@@ -78,10 +66,7 @@ const FILTERS_CONFIG = {
 
   heat: {
     options: {
-      range: {
-        min: 1,
-        max: 3,
-      },
+      range: { min: 1, max: 3, },
       start: 3,
       step: 0.1,
     },
@@ -126,7 +111,7 @@ const clearImageEffect = () => {
   imgUploadPreview.style.filter = 'none';
   imgUploadPreview.className = '';
   effectInputValue.value = '';
-  effectSliderContainer.style.display = 'none';
+  effectSliderContainer.classList.add('hidden');
   /* effectLevelSlider.style.display = 'none'; */
   /* effectLevelSlider.setAttribute('disabled', true); */
 };
@@ -142,7 +127,7 @@ const onChangeImageEffect = (evt) => {
   if (effect === 'none') {
     clearImageEffect();
   } else {
-    effectSliderContainer.style.display = 'block';
+    effectSliderContainer.classList.remove('hidden');
     /* effectLevelSlider.removeAttribute('disabled', true); */
     setImageEffect(FILTERS_CONFIG[effect]);
   }
