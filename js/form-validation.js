@@ -22,7 +22,7 @@ const hashtagsInput = imageUploadForm.querySelector('.text__hashtags');
  */
 const commentInput = imageUploadForm.querySelector('.text__description');
 /**
- *
+ * Кнопка отправки формы
  */
 const uploadSubmitButton = imageUploadForm.querySelector('#upload-submit');
 
