@@ -18,7 +18,7 @@ const bigPictureImg = fullSizePopupContainer.querySelector('.big-picture__img im
  * Кнопка для выхода из полноэкранного просмотра изображения
  * @type {Element | null}
  */
-const buttonCancel = fullSizePopupContainer.querySelector('#picture-cancel');
+const cancelButton = fullSizePopupContainer.querySelector('#picture-cancel');
 /**
  * Количество лайков
  * @type {Element | null}
@@ -28,17 +28,17 @@ const likesCount = fullSizePopupContainer.querySelector('.likes-count');
  * Список комментариев к изображению
  * @type {Element | null}
  */
-const socialComments = fullSizePopupContainer.querySelector('.social__comments');
+const socialCommentsContainer = fullSizePopupContainer.querySelector('.social__comments');
 /**
  * Один комментарий из списка комментариев
  * @type {Element | null}
  */
-const socialOneComment = fullSizePopupContainer.querySelector('.social__comment');
+const postComment = fullSizePopupContainer.querySelector('.social__comment');
 /**
  * Описание фотографии
  * @type {Element | null}
  */
-const socialCaption = fullSizePopupContainer.querySelector('.social__caption');
+const postDescription = fullSizePopupContainer.querySelector('.social__caption');
 /**
  * Количество комментариев - всего
  * @type {Element | null}
@@ -66,7 +66,7 @@ const renderComments = (comments) => {
   const commentFragment = document.createDocumentFragment();
 
   comments.forEach((comment) => {
-    const commentItem = socialOneComment.cloneNode(true);
+    const commentItem = postComment.cloneNode(true);
 
     commentItem.querySelector('.social__picture').src = comment.avatar;
     commentItem.querySelector('.social__text').textContent = comment.message;
@@ -74,7 +74,7 @@ const renderComments = (comments) => {
     commentFragment.append(commentItem);
   });
 
-  socialComments.append(commentFragment);
+  socialCommentsContainer.append(commentFragment);
 };
 
 /**
@@ -120,9 +120,9 @@ const showPhotoPopup = (post) => {
   bigPictureImg.src = post.url;
   likesCount.textContent = post.likes;
   commentsCount.textContent = post.comments.length;
-  socialCaption.textContent = post.description;
+  postDescription.textContent = post.description;
 
-  socialComments.innerHTML = '';
+  socialCommentsContainer.innerHTML = '';
   copyComments = [...post.comments];
   loadMoreComments();
   document.addEventListener('keydown', onBigPhotoEsc);
@@ -146,6 +146,6 @@ function onBigPhotoEsc(evt) {
   }
 }
 
-buttonCancel.addEventListener('click', hidePhotoPopup);
+cancelButton.addEventListener('click', hidePhotoPopup);
 
 export { showPhotoPopup };
