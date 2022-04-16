@@ -1,4 +1,4 @@
-import { showPhotoPopup } from './rendering-full-size-photo.js';
+import { showPhotoPopup } from './post-popup.js';
 
 /**
  * @description Функция по отрисовке постов пользователей на странице

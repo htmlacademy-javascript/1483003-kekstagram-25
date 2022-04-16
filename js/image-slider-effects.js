@@ -1,3 +1,55 @@
+const EFFECT_CONFIG = {
+  chrome: {
+    options: {
+      range: { min: 0, max: 1, },
+      start: 1,
+      step: 0.1,
+    },
+    filterName: 'grayscale',
+    unit: '',
+  },
+
+  sepia: {
+    options: {
+      range: { min: 0, max: 1, },
+      start: 1,
+      step: 0.1,
+    },
+    filterName: 'sepia',
+    unit: '',
+  },
+
+  marvin: {
+    options: {
+      range: { min: 0, max: 100, },
+      start: 100,
+      step: 1,
+    },
+    filterName: 'invert',
+    unit: '%',
+  },
+
+  phobos: {
+    options: {
+      range: { min: 0, max: 3, },
+      start: 3,
+      step: 0.1,
+    },
+    filterName: 'blur',
+    unit: 'px',
+  },
+
+  heat: {
+    options: {
+      range: { min: 1, max: 3, },
+      start: 3,
+      step: 0.1,
+    },
+    filterName: 'brightness',
+    unit: '',
+  },
+};
+
 /**
  * Форма ввода данных
  */
@@ -23,70 +75,18 @@ const effectInputValue = imgUploadSection.querySelector('.effect-level__value');
  */
 const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
 
-const FILTERS_CONFIG = {
-  chrome: {
-    options: {
-      range: { min: 0, max: 1, },
-      start: 1,
-      step: 0.1,
-    },
-    style: 'grayscale',
-    unit: '',
-  },
-
-  sepia: {
-    options: {
-      range: { min: 0, max: 1, },
-      start: 1,
-      step: 0.1,
-    },
-    style: 'sepia',
-    unit: '',
-  },
-
-  marvin: {
-    options: {
-      range: { min: 0, max: 100, },
-      start: 100,
-      step: 1,
-    },
-    style: 'invert',
-    unit: '%',
-  },
-
-  phobos: {
-    options: {
-      range: { min: 0, max: 3, },
-      start: 3,
-      step: 0.1,
-    },
-    style: 'blur',
-    unit: 'px',
-  },
-
-  heat: {
-    options: {
-      range: { min: 1, max: 3, },
-      start: 3,
-      step: 0.1,
-    },
-    style: 'brightness',
-    unit: '',
-  },
-};
-
 /**
  * @description Функция наложение эффектов на изображение
- * @param {string} effect
+ * @param {string} effectName
  */
-const setImageEffect = (effect) => {
-  effectLevelSlider.noUiSlider.updateOptions(effect.options);
+const updateSliderConfig = (effectName) => {
+  effectLevelSlider.noUiSlider.updateOptions(effectName.options);
 };
 
 /**
  * @description Функция сброса значений и блокировки слайдера
  */
-const clearImageEffect = () => {
+const imageEffectReset = () => {
   imgUploadPreview.style.filter = 'none';
   imgUploadPreview.className = '';
   effectInputValue.value = '';
@@ -98,14 +98,14 @@ const clearImageEffect = () => {
  * @param {MouseEvent} evt
  */
 const onChangeImageEffect = (evt) => {
-  const effect = evt.target.value;
+  const effectName = evt.target.value;
   imgUploadPreview.className = '';
-  imgUploadPreview.classList.add(`effects__preview--${effect}`);
-  if (effect === 'none') {
-    clearImageEffect();
+  imgUploadPreview.classList.add(`effects__preview--${effectName}`);
+  if (effectName === 'none') {
+    imageEffectReset();
   } else {
     effectSliderContainer.classList.remove('hidden');
-    setImageEffect(FILTERS_CONFIG[effect]);
+    updateSliderConfig(EFFECT_CONFIG[effectName]);
   }
 };
 
@@ -115,8 +115,8 @@ const onEffectValueChange = (handlersValue) => {
   if (effectName === 'none') {
     return;
   }
-  const filterName = FILTERS_CONFIG[effectName].style;
-  const filterUnits = FILTERS_CONFIG[effectName].unit;
+  const filterName = EFFECT_CONFIG[effectName].style;
+  const filterUnits = EFFECT_CONFIG[effectName].unit;
   imgUploadPreview.style.filter = `${filterName}(${value}${filterUnits})`;
   effectInputValue.value = value;
 };
