@@ -91,7 +91,6 @@ const showCommentsLoader = () => {
  */
 const hideCommentsLoader = () => {
   commentsLoader.classList.add('hidden');
-  /* commentsLoader.removeEventListener('click', loadMoreComments); */
 };
 
 /**
