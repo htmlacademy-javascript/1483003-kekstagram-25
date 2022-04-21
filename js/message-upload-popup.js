@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, getTemplateElement } from './util.js';
 
 const ALERT_SHOW_TIME = 5000;
 
@@ -13,23 +13,12 @@ const errorUploadTemplate = getTemplateElement(pageBody, 'error', 'error');
 const successUploadTemplate = getTemplateElement(pageBody, 'success', 'success');
 
 /**
- * @description Функция поиска шаблона на странице
- * @param {HTMLElement} parent - блок в котором ищем шаблон
- * @param {string} templateId - id шаблона
- * @param {string} elementClass - класс секции внутри шаблона
- * @returns {HTMLElement}
- */
-function getTemplateElement(parent, templateId, elementClass) {
-  return parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
-}
-
-/**
  * @description Функция показа попапа об успешной/неудачной отправке формы
  * @param {string} popupType - класс блока сообщения
  * @param {string} message
  * @param {string} buttonText
  */
-const openUploadMessagePopup = (popupType/* , message, buttonText */) => {
+const openUploadMessagePopup = (popupType) => {
 
   let popupTemplate;
   let popupInnerSection;
@@ -52,11 +41,6 @@ const openUploadMessagePopup = (popupType/* , message, buttonText */) => {
   const innerPopupSection = innerPopup.querySelector(popupInnerSection);
   const popupButton = innerPopup.querySelector(popupButtonElementClass);
 
-  const closeUploadMessagePopup = () => {
-    popupButton.removeEventListener('click', closeUploadMessagePopup);
-    innerPopup.remove();
-  };
-
   const onUploadMessagePopupEsc = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -75,8 +59,19 @@ const openUploadMessagePopup = (popupType/* , message, buttonText */) => {
     }
   };
 
-  document.addEventListener('keydown', onUploadMessagePopupEsc, { once: true });
-  document.addEventListener('click', onOutsideClick, { once: true });
+  /**
+   * @description Функция закрытия сообщения об успешной/ошибочной загрузки поста пользователя и удаления всех обработчиков
+   * @returns {void}
+   */
+  function closeUploadMessagePopup() {
+    popupButton.removeEventListener('click', closeUploadMessagePopup);
+    document.removeEventListener('keydown', onUploadMessagePopupEsc);
+    document.removeEventListener('click', onOutsideClick);
+    innerPopup.remove();
+  }
+
+  document.addEventListener('keydown', onUploadMessagePopupEsc);
+  document.addEventListener('click', onOutsideClick);
 
   popupButton.addEventListener('click', closeUploadMessagePopup);
 
