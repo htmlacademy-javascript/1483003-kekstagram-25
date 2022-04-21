@@ -1,29 +1,4 @@
-/**
- * Форма ввода данных
- */
-const imageUploadForm = document.querySelector('#upload-select-image');
-/**
- * Секция с нужными блоками для удобства поиска
- */
-const imgUploadSection = document.querySelector('.img-upload__overlay');
-/**
- * Полностью весь блок со слайдером
- */
-const effectSliderContainer = document.querySelector('.img-upload__effect-level');
-/**
- * Блок для вставки слайдера
- */
-const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
-/**
- * Input для записи выбранного значения
- */
-const effectInputValue = imgUploadSection.querySelector('.effect-level__value');
-/**
- * Изображение для редактирования
- */
-const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
-
-const FILTERS_CONFIG = {
+const EFFECT_CONFIG = {
   chrome: {
     options: {
       range: { min: 0, max: 1, },
@@ -75,19 +50,46 @@ const FILTERS_CONFIG = {
   },
 };
 
+const NO_EFFECT = 'none';
+
+/**
+ * Форма ввода данных
+ */
+const imageUploadForm = document.querySelector('#upload-select-image');
+/**
+ * Секция с нужными блоками для удобства поиска
+ */
+const imgUploadSection = document.querySelector('.img-upload__overlay');
+/**
+ * Полностью весь блок со слайдером
+ */
+const effectSliderContainer = document.querySelector('.img-upload__effect-level');
+/**
+ * Блок для вставки слайдера
+ */
+const effectLevelSlider = imgUploadSection.querySelector('.effect-level__slider');
+/**
+ * Input для записи выбранного значения
+ */
+const effectInputValue = imgUploadSection.querySelector('.effect-level__value');
+/**
+ * Изображение для редактирования
+ */
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
+
 /**
  * @description Функция наложение эффектов на изображение
- * @param {string} effect
+ * @param {string} effectName
  */
-const setImageEffect = (effect) => {
-  effectLevelSlider.noUiSlider.updateOptions(effect.options);
+const updateSliderConfig = (effectName) => {
+  effectLevelSlider.noUiSlider.updateOptions(effectName.options);
 };
 
 /**
  * @description Функция сброса значений и блокировки слайдера
  */
-const clearImageEffect = () => {
-  imgUploadPreview.style.filter = 'none';
+const imageEffectReset = () => {
+  imgUploadPreview.style.filter = NO_EFFECT;
   imgUploadPreview.className = '';
   effectInputValue.value = '';
   effectSliderContainer.classList.add('hidden');
@@ -98,25 +100,25 @@ const clearImageEffect = () => {
  * @param {MouseEvent} evt
  */
 const onChangeImageEffect = (evt) => {
-  const effect = evt.target.value;
+  const effectName = evt.target.value;
   imgUploadPreview.className = '';
-  imgUploadPreview.classList.add(`effects__preview--${effect}`);
-  if (effect === 'none') {
-    clearImageEffect();
+  imgUploadPreview.classList.add(`effects__preview--${effectName}`);
+  if (effectName === NO_EFFECT) {
+    imageEffectReset();
   } else {
     effectSliderContainer.classList.remove('hidden');
-    setImageEffect(FILTERS_CONFIG[effect]);
+    updateSliderConfig(EFFECT_CONFIG[effectName]);
   }
 };
 
 const onEffectValueChange = (handlersValue) => {
   const value = handlersValue[0];
   const effectName = imageUploadForm.effect.value;
-  if (effectName === 'none') {
+  if (effectName === NO_EFFECT) {
     return;
   }
-  const filterName = FILTERS_CONFIG[effectName].style;
-  const filterUnits = FILTERS_CONFIG[effectName].unit;
+  const filterName = EFFECT_CONFIG[effectName].style;
+  const filterUnits = EFFECT_CONFIG[effectName].unit;
   imgUploadPreview.style.filter = `${filterName}(${value}${filterUnits})`;
   effectInputValue.value = value;
 };

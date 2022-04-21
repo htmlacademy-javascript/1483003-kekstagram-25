@@ -60,7 +60,19 @@ const uploadFormValidate = () => {
  * @param {string} value
  * @returns {boolean}
  */
-const checkHashtagsCount = (value) => value.split(' ').length <= HASHTAGS_MAX_COUNT;
+const checkHashtagsCount = (value) => value.trim().split(' ').filter((word) => word !== '').length <= HASHTAGS_MAX_COUNT;
+
+/**
+ * @description Функция проверяет, чтобы хештеги разделялись одним пробелом, а остальные пробелы не считались за хеш-теги
+ * @param {string} value
+ * @returns {boolean}
+ */
+const checkEmptyTags = (value) => {
+  if (value === '') {
+    return true;
+  }
+  return !value.trim().split(' ').some((word) => word === '');
+};
 
 /**
  * @description Функция проверки длины хештега - не более 20 символов
@@ -85,7 +97,26 @@ const checkIsValidHashtags = (value) => {
   if (value === '') {
     return true;
   }
-  return value.split(' ').every(checkIsValidHashtag);
+  return value.trim().split(' ').filter((word) => word !== '').every(checkIsValidHashtag);
+};
+
+/**
+ * @description Функция проверяет наличие пробелов в конце
+ * @param {string} value
+ * @returns {boolean}
+ */
+const checkHashtagsTrailingSpace = (value) => !value.endsWith(' ');
+
+/**
+ * @description Функция проверяет, что хеш-тег начинается с решетки
+ * @param {string} value
+ * @returns {boolean}
+ */
+const checkHashtagPrefixs = (value) => {
+  if (value === '') {
+    return true;
+  }
+  return value.trim().split(' ').filter((word) => word !== '').every((word) => word.startsWith('#'));
 };
 
 /**
@@ -94,7 +125,7 @@ const checkIsValidHashtags = (value) => {
  * @returns {boolean}
  */
 const validateIsDuplicateHashtags = (value) => {
-  const hashtags = value.toLowerCase().split(' ');
+  const hashtags = value.trim().toLowerCase().split(' ').filter((word) => word !== '');
   const uniqueHashtags = new Set(hashtags);
   return uniqueHashtags.size === hashtags.length;
 };
@@ -107,8 +138,11 @@ const validateIsDuplicateHashtags = (value) => {
 const validateComment = (value) => checkStringMaxLength(value, COMMENT_MAX_LENGTH);
 
 pristine.addValidator(hashtagsInput, checkHashtagsCount, `Не более ${HASHTAGS_MAX_COUNT} хеш-тегов`, 1, false);
+pristine.addValidator(hashtagsInput, checkEmptyTags, 'Хеш-теги разделяются одним пробелом', 1, false);
 pristine.addValidator(hashtagsInput, checkHashtagLength, `Длина хештега не должна превышать ${HASHTAGS_MAX_LENGTH} символов`, 1, true);
 pristine.addValidator(hashtagsInput, checkIsValidHashtags, 'Строка после решётки может состоять только из букв и чисел', 1, false);
+pristine.addValidator(hashtagsInput, checkHashtagsTrailingSpace, 'В поле ввода хеш-тегов не должно быть пробелов в конце', 1, false);
+pristine.addValidator(hashtagsInput, checkHashtagPrefixs, 'Хеш-тег должен начинаться с #', 1, true);
 pristine.addValidator(hashtagsInput, validateIsDuplicateHashtags, 'Хеш-теги не должны повторяться', 1, false);
 pristine.addValidator(commentInput, validateComment, `Длина комментария не может составлять больше ${COMMENT_MAX_LENGTH} символов`, 1, false);
 
