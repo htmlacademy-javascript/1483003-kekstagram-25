@@ -50,8 +50,7 @@ const getRandomIntInclusive = (from, to) => {
  */
 const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
 
-// Получение целого неповторяющегося числа
-
+// Функция получение целого неповторяющегося числа
 const getNextRandomInt = (startNumber = 1, maxStep = 1) => {
   let currentNumber = startNumber;
   return () => {
@@ -61,4 +60,52 @@ const getNextRandomInt = (startNumber = 1, maxStep = 1) => {
   };
 };
 
-export {isEscapeKey, checkStringMaxLength, getRandomIntInclusive, getRandomArrayElement, getNextRandomInt};
+/**
+ * Возвращает перемешанную копию исходного массива
+ * @param {Array} array - исходный массив
+ * @returns {Array} перемешанная копия массива
+ */
+const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+/**
+ * Заданное количество уникальных числел, в допустимом диапазоне
+ * @param {number} from - начальное значение диапазона
+ * @param {number} to - конечное диапазона
+ * @param {number} resultsLimit - количество элементов
+ * @returns {number[]} - Массив чисел в диапазоне
+ */
+const randomIntegersBetweenRange = (from, to, resultsLimit) => {
+  const range = Math.abs(from - to);
+  if (!range) {
+    return [];
+  }
+  const resultsCount = Math.min(range, resultsLimit);
+  const minValue = Math.min(from, to);
+  const values = Array.from({ length: range }, (_, index) => minValue + index);
+  return shuffleArray(values).splice(0, resultsCount);
+};
+
+/**
+ * @description Функция устранения 'дребезга' при переключении фильтра сортировки постов
+ * @param {function} callback
+ * @param {number} timeoutDelay - задержка по времени
+ * @returns {function}
+ */
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+/**
+ * @description Функция поиска шаблона на странице
+ * @param {HTMLElement} parent - блок в котором ищем шаблон
+ * @param {string} templateId - id шаблона
+ * @param {string} elementClass - класс секции внутри шаблона
+ * @returns {HTMLElement}
+ */
+const getTemplateElement = (parent, templateId, elementClass) => parent.querySelector(`#${templateId}`).content.querySelector(`.${elementClass}`);
+
+export { isEscapeKey, checkStringMaxLength, getRandomIntInclusive, getRandomArrayElement, getNextRandomInt, debounce, randomIntegersBetweenRange, getTemplateElement };

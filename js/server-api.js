@@ -1,19 +1,22 @@
 import { showAlertMessage } from './message-upload-popup.js';
 
+const API_URL = 'https://25.javascript.pages.academy/kekstagram';
+
 /**
  * @description Получение данных от сервера
- * @param {array} renderFunction
+ * @param {function} renderFunction
  */
-const getDataFromServer = (renderFunction) => {
-  fetch('https://25.javascript.pages.academy/kekstagram/data')
+const getDataFromServer = (onSuccess) => {
+  fetch(`${API_URL}/data`)
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    .then((posts) =>
-      renderFunction(posts))
+    .then((posts) => {
+      onSuccess(posts);
+    })
     .catch(() => {
       showAlertMessage('Не удалось загрузить данные с сервера');
     });
@@ -27,7 +30,7 @@ const getDataFromServer = (renderFunction) => {
  */
 const sendDataToServer = (formData, onSuccess, onError) => {
   fetch(
-    'https://25.javascript.pages.academy/kekstagram',
+    API_URL,
     {
       method: 'POST',
       body: formData,

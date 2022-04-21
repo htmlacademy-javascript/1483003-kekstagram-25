@@ -2,6 +2,7 @@ const PREVIEW_SCALE_STEP = 25;
 const PREVIEW_MIN_SCALE = 25;
 const PREVIEW_MAX_SCALE = 100;
 const PREVIEW_SCALE_DEFAULT = 100;
+const DIVIDER_FOR_SCALE = 100;
 
 const imgUploadPreviewContainer = document.querySelector('.img-upload__preview-container');
 /**
@@ -29,7 +30,7 @@ const onReduceScale = () => {
   if (scale > PREVIEW_MIN_SCALE) {
     scale -= PREVIEW_SCALE_STEP;
     scaleControlValue.value = `${scale}%`;
-    imgUploadPreview.style = `transform: scale(${scale / 100})`;
+    imgUploadPreview.style = `transform: scale(${scale / DIVIDER_FOR_SCALE})`;
   }
 };
 /**
@@ -40,7 +41,7 @@ const onIncreaseScale = () => {
   if (scale < PREVIEW_MAX_SCALE) {
     scale += PREVIEW_SCALE_STEP;
     scaleControlValue.value = `${scale}%`;
-    imgUploadPreview.style = `transform: scale(${scale / 100})`;
+    imgUploadPreview.style = `transform: scale(${scale / DIVIDER_FOR_SCALE})`;
   }
 };
 

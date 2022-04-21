@@ -83,7 +83,6 @@ const renderComments = (comments) => {
  */
 const showCommentsLoader = () => {
   commentsLoader.classList.remove('hidden');
-  commentsLoader.addEventListener('click', loadMoreComments);
 };
 
 /**
@@ -92,7 +91,7 @@ const showCommentsLoader = () => {
  */
 const hideCommentsLoader = () => {
   commentsLoader.classList.add('hidden');
-  commentsLoader.removeEventListener('click', loadMoreComments);
+  /* commentsLoader.removeEventListener('click', loadMoreComments); */
 };
 
 /**
@@ -132,7 +131,7 @@ const showPhotoPopup = (post) => {
  * @description Функция закрытия окна с полноразмерным изображением
  * @returns {void}
  */
-const hidePhotoPopup = () => {
+const onHidePhotoPopup = () => {
   fullSizePopupContainer.classList.add('hidden');
   pageBody.classList.remove('modal-open');
 
@@ -142,10 +141,11 @@ const hidePhotoPopup = () => {
 function onBigPhotoEsc(evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hidePhotoPopup();
+    onHidePhotoPopup();
   }
 }
 
-cancelButton.addEventListener('click', hidePhotoPopup);
+cancelButton.addEventListener('click', onHidePhotoPopup);
+commentsLoader.addEventListener('click', () => loadMoreComments());
 
 export { showPhotoPopup };

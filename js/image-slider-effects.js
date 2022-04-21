@@ -5,7 +5,7 @@ const EFFECT_CONFIG = {
       start: 1,
       step: 0.1,
     },
-    filterName: 'grayscale',
+    style: 'grayscale',
     unit: '',
   },
 
@@ -15,7 +15,7 @@ const EFFECT_CONFIG = {
       start: 1,
       step: 0.1,
     },
-    filterName: 'sepia',
+    style: 'sepia',
     unit: '',
   },
 
@@ -25,7 +25,7 @@ const EFFECT_CONFIG = {
       start: 100,
       step: 1,
     },
-    filterName: 'invert',
+    style: 'invert',
     unit: '%',
   },
 
@@ -35,7 +35,7 @@ const EFFECT_CONFIG = {
       start: 3,
       step: 0.1,
     },
-    filterName: 'blur',
+    style: 'blur',
     unit: 'px',
   },
 
@@ -45,10 +45,12 @@ const EFFECT_CONFIG = {
       start: 3,
       step: 0.1,
     },
-    filterName: 'brightness',
+    style: 'brightness',
     unit: '',
   },
 };
+
+const NO_EFFECT = 'none';
 
 /**
  * Форма ввода данных
@@ -87,7 +89,7 @@ const updateSliderConfig = (effectName) => {
  * @description Функция сброса значений и блокировки слайдера
  */
 const imageEffectReset = () => {
-  imgUploadPreview.style.filter = 'none';
+  imgUploadPreview.style.filter = NO_EFFECT;
   imgUploadPreview.className = '';
   effectInputValue.value = '';
   effectSliderContainer.classList.add('hidden');
@@ -101,7 +103,7 @@ const onChangeImageEffect = (evt) => {
   const effectName = evt.target.value;
   imgUploadPreview.className = '';
   imgUploadPreview.classList.add(`effects__preview--${effectName}`);
-  if (effectName === 'none') {
+  if (effectName === NO_EFFECT) {
     imageEffectReset();
   } else {
     effectSliderContainer.classList.remove('hidden');
@@ -112,7 +114,7 @@ const onChangeImageEffect = (evt) => {
 const onEffectValueChange = (handlersValue) => {
   const value = handlersValue[0];
   const effectName = imageUploadForm.effect.value;
-  if (effectName === 'none') {
+  if (effectName === NO_EFFECT) {
     return;
   }
   const filterName = EFFECT_CONFIG[effectName].style;
